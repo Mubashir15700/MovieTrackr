@@ -1,18 +1,41 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import { UserDocument } from './userModel.ts';
+import mongoose, { Document, Schema } from "mongoose";
+import { UserDocument } from "./userModel.ts";
 
-// Interface for Watchlist document
-export interface WatchlistDocument extends Document {
-    user: UserDocument['_id'];
-    movies: mongoose.Types.ObjectId[];
+interface MovieDetails {
+    movieId: string;
+    title: string;
+    description: string;
+    releaseYear: number;
+    genre: string[];
+    isWatched?: boolean; // Optional field
+    rating?: number; // Optional field
+    review?: string; // Optional field
 }
 
-// Define Watchlist schema
+export interface WatchlistDocument extends Document {
+    user: UserDocument["_id"];
+    movies: MovieDetails[];
+}
+
 const WatchlistSchema: Schema<WatchlistDocument> = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    movies: [{ type: Schema.Types.ObjectId, ref: 'Movie' }],
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    movies: [
+        {
+            movieId: { type: String, required: true },
+            title: { type: String, required: true },
+            description: { type: String, required: true },
+            releaseYear: { type: Number, required: true },
+            genre: { type: [String], required: true },
+            isWatched: { type: Boolean, default: false }, // Optional with default value
+            rating: { type: Number, default: 0 }, // Optional with default value
+            review: { type: String }, // Optional field
+        },
+    ],
 });
 
-const Watchlist = mongoose.model<WatchlistDocument>('Watchlist', WatchlistSchema);
+const Watchlist = mongoose.model<WatchlistDocument>(
+    "Watchlist",
+    WatchlistSchema,
+);
 
 export default Watchlist;

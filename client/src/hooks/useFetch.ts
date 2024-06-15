@@ -8,7 +8,7 @@ interface UseFetchResponse<T> {
     fetchData: () => Promise<void>;
 }
 
-const useFetch = <T,>(url: string): UseFetchResponse<T> => {
+const useFetch = <T>(url: string): UseFetchResponse<T> => {
     const [response, setResponse] = useState<T | null>(null);
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(false);

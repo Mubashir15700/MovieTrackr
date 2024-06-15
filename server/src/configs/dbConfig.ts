@@ -12,7 +12,7 @@ export const connectToDatabase = async () => {
         if (!URL) {
             throw new AppError(
                 "Database URL not provided in environment variables.",
-                HttpStatusCode.INTERNAL_SERVER,
+                HttpStatusCode.INTERNAL_SERVER_ERROR,
             );
         }
 
