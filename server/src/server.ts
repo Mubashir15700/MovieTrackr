@@ -1,6 +1,6 @@
 import app from "./app.ts";
-import logger from "./utils/logger";
-import { connectToDatabase, disconnectFromDatabase } from "./configs/dbConfig";
+import logger from "./utils/logger.ts";
+import { connectToDatabase, disconnectFromDatabase } from "./configs/dbConfig.ts";
 
 const port = process.env.PORT;
 app.set("port", port || 3000);

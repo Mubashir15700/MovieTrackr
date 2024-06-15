@@ -6,6 +6,6 @@
     "ignore": [
         "tests/**/*.test.ts"
     ],
-    "exec": "node --env-file=.env --loader ts-node/esm src/app.ts",
+    "exec": "node --env-file=.env --loader ts-node/esm src/server.ts",
     "delay": "1000"
 }

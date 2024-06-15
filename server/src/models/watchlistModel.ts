@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { UserDocument } from './userModel';
+import { UserDocument } from './userModel.ts';
 
 // Interface for Watchlist document
 export interface WatchlistDocument extends Document {
