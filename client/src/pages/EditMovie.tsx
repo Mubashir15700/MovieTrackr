@@ -1,7 +1,5 @@
 const EditMovie = () => {
-    return (
-        <div>EditMovie</div>
-    )
-}
+    return <div>EditMovie</div>;
+};
 
-export default EditMovie
+export default EditMovie;
