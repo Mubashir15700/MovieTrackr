@@ -8,6 +8,8 @@ const errorHandler = (
     res: Response,
     next: NextFunction,
 ) => {
+    console.log("------- ERR -------", err);
+
     let statusCode: number;
     let message: string;
 

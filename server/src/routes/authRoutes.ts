@@ -13,6 +13,6 @@ const router = Router();
 router.get("/checkauth", checkAuthHandler);
 router.post("/signup", validateSignup, signupHandler);
 router.post("/login", validateLogin, loginHandler);
-router.post("/logout", logoutHandler);
+router.get("/logout", logoutHandler);
 
 export default router;

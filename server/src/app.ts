@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import {
     morganMiddleware,
     morganWinstonMiddleware,
@@ -18,6 +19,7 @@ const app = express();
 app.use(helmet()); // to secure the Express app by setting various HTTP headers
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 // Use morganMiddleware for HTTP request logging
 app.use(morganMiddleware); // Logs to http.log using morgan and also to Winston logger
