@@ -25,6 +25,7 @@ export const checkAuthHandler = catchAsync(
             ) as JwtPayload;
         } catch (err: any) {
             console.error("Token verification error:", err);
+
             if (err instanceof jwt.TokenExpiredError) {
                 throw new AppError(
                     "Token has expired",
@@ -36,6 +37,7 @@ export const checkAuthHandler = catchAsync(
                     HttpStatusCode.UNAUTHORIZED,
                 );
             }
+            
             throw new AppError(
                 "Unexpected token error",
                 HttpStatusCode.UNAUTHORIZED,

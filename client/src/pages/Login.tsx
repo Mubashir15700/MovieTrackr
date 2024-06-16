@@ -9,11 +9,14 @@ import useApiRequest from "../hooks/useApiRequest";
 
 interface UserData {
     status: string;
-    user: {
-        email: string;
-        name: string;
-    };
-    token: string;
+    data: {
+        user: {
+            _id: string;
+            email: string;
+            name: string;
+        };
+        token: string;
+    }
 }
 
 const Login = () => {
@@ -26,8 +29,9 @@ const Login = () => {
     useEffect(() => {
         if (response?.status === "success") {
             const user = {
-                name: response?.user?.name,
-                email: response?.user?.email,
+                userId: response?.data?.user?._id,
+                name: response?.data?.user?.name,
+                email: response?.data?.user?.email,
             };
 
             dispatch(loginSuccess({ user }));

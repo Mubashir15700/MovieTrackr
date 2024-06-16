@@ -1,4 +1,4 @@
-import MovieCard from "./MovieCard"
+import MovieCard from "./MovieCard";
 
 const MovieList = () => {
     return (
@@ -8,7 +8,7 @@ const MovieList = () => {
             <MovieCard />
             <MovieCard />
         </>
-    )
+    );
 }
 
-export default MovieList
+export default MovieList;

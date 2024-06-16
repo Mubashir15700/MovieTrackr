@@ -16,11 +16,14 @@ import NotFound from "../pages/NotFound";
 
 interface UserData {
     status: string;
-    user: {
-        email: string;
-        name: string;
-    };
-    token: string;
+    data: {
+        user: {
+            _id: string;
+            email: string;
+            name: string;
+        };
+        token: string;
+    }
 }
 
 const AppRoutes = () => {
@@ -30,8 +33,6 @@ const AppRoutes = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("APPROUTER USEEFFECT");
-
         const checkauth = async () => {
             try {
                 await sendRequest("GET");
@@ -47,14 +48,16 @@ const AppRoutes = () => {
     useEffect(() => {
         if (response && response.status === "success") {
             const user = {
-                name: response?.user?.name,
-                email: response?.user?.email,
+                userId: response?.data?.user?._id,
+                name: response?.data?.user?.name,
+                email: response?.data?.user?.email,
             };
             dispatch(loginSuccess({ user }));
         }
 
         if (error) {
-            console.log(error);
+            console.log("Check authentication error:", error);
+            toast.error(error?.response?.data?.message);
         }
     }, [response, error, dispatch]);
 
