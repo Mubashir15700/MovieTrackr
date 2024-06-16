@@ -9,7 +9,7 @@ interface LogoutResponse {
     status: string;
 }
 
-const Watchlist = () => {
+const NavBar = () => {
     const { response, error, loading, sendRequest } =
         useApiRequest<LogoutResponse>("/auth/logout");
 
@@ -36,20 +36,13 @@ const Watchlist = () => {
 
     return (
         <div>
-            <h1>Watchlist</h1>
-            <ul>
-                <li>
-                    <Link to="/add-movie">Add Movie</Link>
-                </li>
-                <li>
-                    <Link to="/edit-movie">Edit Movie</Link>
-                </li>
-            </ul>
+            <h1>Movie Watchlist</h1>
+            <Link to="/add-movie">Add Movie</Link>
             <button onClick={handlelogout}>
                 {loading ? "loading..." : ""} Logout
             </button>
         </div>
-    );
-};
+    )
+}
 
-export default Watchlist;
+export default NavBar;

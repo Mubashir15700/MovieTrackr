@@ -1,5 +1,5 @@
 export const RouteVariables = {
-    Watchlist: "/",
+    Dashboard: "/",
     Login: "/login",
     Signup: "/signup",
     AddMovie: "/add-movie",

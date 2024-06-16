@@ -9,7 +9,7 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import AuthRoute from "../components/AuthRoutes";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
-import Watchlist from "../pages/Watchlist";
+import Dashboard from "../pages/Dashboard";
 import AddMovie from "../pages/AddMovie";
 import EditMovie from "../pages/EditMovie";
 import NotFound from "../pages/NotFound";
@@ -81,10 +81,10 @@ const AppRoutes = () => {
                 }
             />
             <Route
-                path={RouteVariables.Watchlist}
+                path={RouteVariables.Dashboard}
                 element={
                     <ProtectedRoute>
-                        <Watchlist />
+                        <Dashboard />
                     </ProtectedRoute>
                 }
             />

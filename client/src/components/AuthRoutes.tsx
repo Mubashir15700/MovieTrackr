@@ -14,7 +14,7 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ children }) => {
     );
 
     if (isAuthenticated) {
-        return <Navigate to={RouteVariables.Watchlist} />;
+        return <Navigate to={RouteVariables.Dashboard} />;
     } else {
         return <>{children}</>;
     }

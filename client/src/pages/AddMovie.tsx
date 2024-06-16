@@ -1,5 +1,7 @@
+import MovieForm from "../components/MovieForm";
+
 const AddMovie = () => {
-    return <div>AddMovie</div>;
+    return <MovieForm />;
 };
 
 export default AddMovie;

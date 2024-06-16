@@ -1,5 +1,7 @@
+import MovieForm from "../components/MovieForm";
+
 const EditMovie = () => {
-    return <div>EditMovie</div>;
+    return <MovieForm />;
 };
 
 export default EditMovie;
