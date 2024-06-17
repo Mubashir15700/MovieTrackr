@@ -6,22 +6,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "../utils/validations/signUpSchema";
 import { loginSuccess } from "../redux/slices/authSlice";
 import useApiRequest from "../hooks/useApiRequest";
-
-interface UserData {
-    status: string;
-    data: {
-        user: {
-            _id: string;
-            email: string;
-            name: string;
-        };
-        token: string;
-    };
-}
+import { AuthResponse } from "../interfaces/AuthResponse";
 
 const SignUp = () => {
     const { response, error, loading, sendRequest } =
-        useApiRequest<UserData>("/auth/signup");
+        useApiRequest<AuthResponse>("/auth/signup");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

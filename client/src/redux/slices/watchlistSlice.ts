@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Movie {
-    movieId: string;
-    title: string;
-    description: string;
-    releaseYear: number;
-    genre: string[];
-    isWatched?: boolean;
-    rating?: number;
-    review?: string;
-}
+import { Movie } from "../../interfaces/Movie";
 
 interface WatchlistState {
     movies: Movie[];
@@ -34,7 +24,8 @@ const watchlistSlice = createSlice({
 
         fetchWatchlistSuccess(state, action: PayloadAction<Movie[]>) {
             state.loading = false;
-            state.movies = action.payload;
+            state.movies = action.payload; // Assign the array of movies
+            state.error = null; // Reset error state upon success
         },
 
         fetchWatchlistFailure(state, action: PayloadAction<string>) {
@@ -113,6 +104,9 @@ const watchlistSlice = createSlice({
 });
 
 export const {
+    fetchWatchlistStart,
+    fetchWatchlistSuccess,
+    fetchWatchlistFailure,
     addMovie,
     editMovie,
     deleteMovie,

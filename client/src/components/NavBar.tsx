@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import useApiRequest from "../hooks/useApiRequest";
 import { logout } from "../redux/slices/authSlice";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 interface LogoutResponse {
     status: string;
@@ -25,12 +26,22 @@ const NavBar = () => {
         }
     }, [response, , error, navigate]);
 
-    const handlelogout = async () => {
-        try {
-            await sendRequest("GET");
-        } catch (err) {
-            console.error("Logout error:", err);
-            toast.error("Logout failed. Please try again.");
+    const handleLogout = async () => {
+        const result = await ConfirmationDialog.confirmAction(
+            "Are you sure?",
+            "You will be logged out",
+            "Logout",
+            "#3085d6",
+            "Cancel",
+        );
+
+        if (result.isConfirmed) {
+            try {
+                await sendRequest("GET");
+            } catch (err) {
+                console.error("Logout error:", err);
+                toast.error("Logout failed. Please try again.");
+            }
         }
     };
 
@@ -38,7 +49,7 @@ const NavBar = () => {
         <div>
             <h1>Movie Watchlist</h1>
             <Link to="/add-movie">Add Movie</Link>
-            <button onClick={handlelogout}>
+            <button onClick={handleLogout}>
                 {loading ? "loading..." : ""} Logout
             </button>
         </div>

@@ -151,7 +151,7 @@ export const deleteMovieHandler = catchAsync(
 
 export const getMoviesHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const userId = req.query.userId as string;
+        const userId = req?.user?._id;
 
         if (!userId) {
             throw new AppError(
@@ -160,13 +160,13 @@ export const getMoviesHandler = catchAsync(
             );
         }
 
-        const watchlist = await Watchlist.findOne({ user: userId }).populate(
-            "user",
-        );
+        const existingWatchlist = await Watchlist.findOne({
+            user: userId,
+        }).populate("user");
 
-        if (!watchlist) {
-            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
-        }
+        const watchlist = existingWatchlist
+            ? existingWatchlist
+            : { movies: [] };
 
         res.status(HttpStatusCode.OK).json({
             status: "success",

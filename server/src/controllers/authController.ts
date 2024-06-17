@@ -13,7 +13,10 @@ export const checkAuthHandler = catchAsync(
         const token = req.cookies.jwt_token;
 
         if (!token) {
-            throw new AppError("No token found", HttpStatusCode.UNAUTHORIZED);
+            throw new AppError(
+                "Unauthorized. Please log in.",
+                HttpStatusCode.UNAUTHORIZED,
+            );
         }
 
         let decoded: JwtPayload;

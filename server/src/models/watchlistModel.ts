@@ -7,9 +7,9 @@ interface MovieDetails {
     description: string;
     releaseYear: number;
     genre: string[];
-    isWatched?: boolean; // Optional field
-    rating?: number; // Optional field
-    review?: string; // Optional field
+    isWatched?: boolean;
+    rating?: number;
+    review?: string;
 }
 
 export interface WatchlistDocument extends Document {

@@ -22,12 +22,17 @@ export const checkAuthStatus = async (
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY!) as { userId: string, email: string };
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
+            userId: string;
+            email: string;
+        };
 
-        const user = await User.findById(decoded.userId) as UserDocument;
+        const user = (await User.findById(decoded.userId)) as UserDocument;
 
         if (!user) {
-            return next(new AppError("User not found", HttpStatusCode.NOT_FOUND));
+            return next(
+                new AppError("User not found", HttpStatusCode.NOT_FOUND),
+            );
         }
 
         req.user = user;
@@ -37,12 +42,17 @@ export const checkAuthStatus = async (
         console.error("Check auth status error:", err);
 
         if (err instanceof jwt.TokenExpiredError) {
-            return next(new AppError("Token has expired", HttpStatusCode.UNAUTHORIZED));
+            return next(
+                new AppError("Token has expired", HttpStatusCode.UNAUTHORIZED),
+            );
         } else if (err instanceof jwt.JsonWebTokenError) {
-            return next(new AppError("Invalid token", HttpStatusCode.UNAUTHORIZED));
+            return next(
+                new AppError("Invalid token", HttpStatusCode.UNAUTHORIZED),
+            );
         }
 
-        next(new AppError("Unexpected token error", HttpStatusCode.UNAUTHORIZED));
+        next(
+            new AppError("Unexpected token error", HttpStatusCode.UNAUTHORIZED),
+        );
     }
 };
-

@@ -13,22 +13,11 @@ import Dashboard from "../pages/Dashboard";
 import AddMovie from "../pages/AddMovie";
 import EditMovie from "../pages/EditMovie";
 import NotFound from "../pages/NotFound";
-
-interface UserData {
-    status: string;
-    data: {
-        user: {
-            _id: string;
-            email: string;
-            name: string;
-        };
-        token: string;
-    };
-}
+import { AuthResponse } from "../interfaces/AuthResponse";
 
 const AppRoutes = () => {
     const { response, error, loading, sendRequest } =
-        useApiRequest<UserData>("/auth/checkauth");
+        useApiRequest<AuthResponse>("/auth/checkauth");
 
     const dispatch = useDispatch();
 
