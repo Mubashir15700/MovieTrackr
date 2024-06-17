@@ -30,7 +30,7 @@ const MovieList = () => {
         const fetchMovies = async () => {
             try {
                 dispatch(fetchWatchlistStart());
-                await sendRequest(); // Removed unnecessary "POST" argument
+                await sendRequest("GET");
             } catch (err: any) {
                 console.error("Fetch movies error:", err);
                 toast.error("Failed to fetch movies. Please try again.");
@@ -60,10 +60,9 @@ const MovieList = () => {
     return (
         <>
             <div>MovieList</div>
-            {movies.map(() => {
-                <MovieCard />;
-            })}
-            <MovieCard />
+            {movies.map((movie, index) => (
+                <MovieCard key={index} movie={movie} />
+            ))}
         </>
     );
 };

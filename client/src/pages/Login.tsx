@@ -28,7 +28,7 @@ const Login = () => {
         } else if (error) {
             toast.error(error?.response?.data?.message);
         }
-    }, [response, , error, navigate]);
+    }, [response, error, navigate]);
 
     const handleSubmit = async (values: {
         email: string;

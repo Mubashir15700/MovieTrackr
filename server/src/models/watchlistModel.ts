@@ -26,9 +26,9 @@ const WatchlistSchema: Schema<WatchlistDocument> = new Schema({
             description: { type: String, required: true },
             releaseYear: { type: Number, required: true },
             genre: { type: [String], required: true },
-            isWatched: { type: Boolean, default: false }, // Optional with default value
-            rating: { type: Number, default: 0 }, // Optional with default value
-            review: { type: String }, // Optional field
+            isWatched: { type: Boolean, default: false },
+            rating: { type: Number, default: 0 },
+            review: { type: String },
         },
     ],
 });

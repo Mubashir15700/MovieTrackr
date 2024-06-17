@@ -5,6 +5,9 @@ export const MovieSchema = Yup.object().shape({
     description: Yup.string().required("Description is required"),
     releaseYear: Yup.number()
         .typeError("Release year must be numeric")
-        .required("Release year is required"),
+        .required("Release year is required")
+        .integer("Release year must be an integer")
+        .min(1900, "Release year must be at least 1900")
+        .max(new Date().getFullYear(), "Release year cannot be in future"),
     genre: Yup.array().of(Yup.string()).min(1, "Genre is required"),
 });

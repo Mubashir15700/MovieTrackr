@@ -32,7 +32,7 @@ export const addMovieHandler = catchAsync(
             description,
             releaseYear,
             genre,
-            isWatched: isWatched || false,
+            isWatched,
             rating,
             review,
         };
@@ -49,7 +49,7 @@ export const addMovieHandler = catchAsync(
         res.status(HttpStatusCode.CREATED).json({
             status: "success",
             data: {
-                watchlist: watchlist.movies,
+                movie: newMovie,
             },
         });
     },
@@ -57,18 +57,10 @@ export const addMovieHandler = catchAsync(
 
 export const editMovieHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const {
-            movieId,
-            title,
-            description,
-            releaseYear,
-            genre,
-            isWatched,
-            rating,
-            review,
-        } = req.body;
+        const { title, description, releaseYear, genre } = req.body;
 
         const userId = req.user?._id;
+        const movieId = req.params.id;
 
         if (!userId) {
             throw new AppError(
@@ -96,13 +88,11 @@ export const editMovieHandler = catchAsync(
 
         watchlist.movies[index] = {
             ...watchlist.movies[index],
+            movieId,
             title,
             description,
             releaseYear,
             genre,
-            isWatched,
-            rating,
-            review,
         };
 
         await watchlist.save();
@@ -110,7 +100,7 @@ export const editMovieHandler = catchAsync(
         res.status(HttpStatusCode.OK).json({
             status: "success",
             data: {
-                watchlist: watchlist.movies,
+                movie: watchlist.movies[index],
             },
         });
     },
@@ -118,9 +108,8 @@ export const editMovieHandler = catchAsync(
 
 export const deleteMovieHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const { movieId } = req.body;
-
         const userId = req.user?._id;
+        const movieId = req.params.id;
 
         if (!userId) {
             throw new AppError(
@@ -142,9 +131,6 @@ export const deleteMovieHandler = catchAsync(
 
         res.status(HttpStatusCode.OK).json({
             status: "success",
-            data: {
-                watchlist: watchlist.movies,
-            },
         });
     },
 );
@@ -180,7 +166,6 @@ export const getMoviesHandler = catchAsync(
 export const updateWatchedStatusHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         const { movieId, isWatched } = req.body;
-
         const userId = req.user?._id;
 
         if (!userId) {
@@ -212,9 +197,6 @@ export const updateWatchedStatusHandler = catchAsync(
 
         res.status(HttpStatusCode.OK).json({
             status: "success",
-            data: {
-                watchlist: watchlist.movies,
-            },
         });
     },
 );
@@ -262,48 +244,6 @@ export const rateMovieHandler = catchAsync(
 );
 
 export const reviewMovieHandler = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-        const { movieId, review } = req.body;
-
-        const userId = req.user?._id;
-
-        if (!userId) {
-            throw new AppError(
-                "User not authenticated or missing user ID",
-                HttpStatusCode.UNAUTHORIZED,
-            );
-        }
-
-        const watchlist = await Watchlist.findOne({ user: userId });
-
-        if (!watchlist) {
-            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
-        }
-
-        const index = watchlist.movies.findIndex(
-            (movie) => movie.movieId === movieId,
-        );
-
-        if (index === -1) {
-            throw new AppError(
-                "Movie not found in watchlist",
-                HttpStatusCode.NOT_FOUND,
-            );
-        }
-
-        watchlist.movies[index].review = review;
-        await watchlist.save();
-
-        res.status(HttpStatusCode.OK).json({
-            status: "success",
-            data: {
-                watchlist: watchlist.movies,
-            },
-        });
-    },
-);
-
-export const editReviewHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         const { movieId, review } = req.body;
 

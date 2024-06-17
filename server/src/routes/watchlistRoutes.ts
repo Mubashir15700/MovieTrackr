@@ -7,7 +7,6 @@ import {
     updateWatchedStatusHandler,
     rateMovieHandler,
     reviewMovieHandler,
-    editReviewHandler,
     deleteReviewHandler,
 } from "../controllers/watchlistController.js";
 import { checkAuthStatus } from "../middlewares/checkAuth.js";
@@ -31,12 +30,6 @@ router.post(
     checkAuthStatus,
     validateReview,
     reviewMovieHandler,
-);
-router.patch(
-    "/movies/:id/review",
-    checkAuthStatus,
-    validateReview,
-    editReviewHandler,
 );
 router.delete("/movies/:id/review", checkAuthStatus, deleteReviewHandler);
 

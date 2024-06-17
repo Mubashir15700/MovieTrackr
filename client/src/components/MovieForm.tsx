@@ -1,29 +1,81 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { addMovie, editMovie } from "../redux/slices/watchlistSlice";
 import { MovieSchema } from "../utils/validations/movieSchema";
+import useApiRequest from "../hooks/useApiRequest";
+import { Movie } from "../interfaces/Movie";
+import { RootState } from "../redux/rootReducer";
 
 interface MovieFormValues {
+    movieId?: string;
     title: string;
     description: string;
-    releaseYear: string;
+    releaseYear: number | "";
     genre: string[];
 }
 
-const MovieForm: React.FC = () => {
-    const initialValues: MovieFormValues = {
-        title: "",
-        description: "",
-        releaseYear: "",
-        genre: [],
+interface WatchlistResponse {
+    status: string;
+    data: {
+        movie: Movie;
     };
+}
+
+interface MovieFormProps {
+    purpose: "add" | "edit";
+    id?: string;
+}
+
+const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
+    const endPoint =
+        purpose === "add" ? "/watchlist/movies/add" : `/watchlist/movies/${id}`;
+
+    const { response, error, loading, sendRequest } =
+        useApiRequest<WatchlistResponse>(endPoint);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (response?.status === "success") {
+            const movie = response?.data?.movie;
+            purpose === "add"
+                ? dispatch(addMovie(movie))
+                : dispatch(editMovie(movie));
+            navigate("/");
+        } else if (error) {
+            toast.error(error?.response?.data?.message);
+        }
+    }, [response, error, navigate]);
 
     const handleSubmit = async (values: MovieFormValues) => {
-        console.log(values);
+        try {
+            const method = purpose === "add" ? "POST" : "PUT";
+            await sendRequest(method, values);
+        } catch (err) {
+            console.error("Login error:", err);
+            toast.error("Login failed. Please try again.");
+        }
+    };
+
+    const movieToEdit = useSelector((state: RootState) =>
+        state.watchlist.movies.find((movie) => movie.movieId === id),
+    );
+
+    const initialValues: MovieFormValues = {
+        movieId: id || "",
+        title: movieToEdit?.title || "",
+        description: movieToEdit?.description || "",
+        releaseYear: movieToEdit?.releaseYear || "",
+        genre: movieToEdit?.genre || [],
     };
 
     return (
         <div>
-            <h1>Add a New Movie</h1>
+            <h1>{purpose === "add" ? "Add a New Movie" : "Edit Movie"}</h1>
             <Formik
                 initialValues={initialValues}
                 validationSchema={MovieSchema}
@@ -76,7 +128,7 @@ const MovieForm: React.FC = () => {
                             />
                         </div>
                         <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Adding..." : "Add Movie"}
+                            {isSubmitting ? "Submitting..." : "Submit"}
                         </button>
                     </Form>
                 )}

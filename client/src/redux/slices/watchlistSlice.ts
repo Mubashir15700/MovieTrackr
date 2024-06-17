@@ -24,8 +24,8 @@ const watchlistSlice = createSlice({
 
         fetchWatchlistSuccess(state, action: PayloadAction<Movie[]>) {
             state.loading = false;
-            state.movies = action.payload; // Assign the array of movies
-            state.error = null; // Reset error state upon success
+            state.movies = action.payload;
+            state.error = null;
         },
 
         fetchWatchlistFailure(state, action: PayloadAction<string>) {
@@ -53,6 +53,19 @@ const watchlistSlice = createSlice({
             );
         },
 
+        updateWatchStatus(
+            state,
+            action: PayloadAction<{ movieId: string; isWatched: boolean }>,
+        ) {
+            const { movieId, isWatched } = action.payload;
+            const index = state.movies.findIndex(
+                (movie) => movie.movieId === movieId,
+            );
+            if (index !== -1) {
+                state.movies[index].isWatched = isWatched;
+            }
+        },
+
         rateMovie(
             state,
             action: PayloadAction<{ movieId: string; rating: number }>,
@@ -67,19 +80,6 @@ const watchlistSlice = createSlice({
         },
 
         reviewMovie(
-            state,
-            action: PayloadAction<{ movieId: string; review: string }>,
-        ) {
-            const { movieId, review } = action.payload;
-            const index = state.movies.findIndex(
-                (movie) => movie.movieId === movieId,
-            );
-            if (index !== -1) {
-                state.movies[index].review = review;
-            }
-        },
-
-        editReview(
             state,
             action: PayloadAction<{ movieId: string; review: string }>,
         ) {
@@ -110,9 +110,9 @@ export const {
     addMovie,
     editMovie,
     deleteMovie,
+    updateWatchStatus,
     rateMovie,
     reviewMovie,
-    editReview,
     deleteReview,
 } = watchlistSlice.actions;
 

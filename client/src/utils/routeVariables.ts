@@ -3,6 +3,6 @@ export const RouteVariables = {
     Login: "/login",
     Signup: "/signup",
     AddMovie: "/add-movie",
-    EditMovie: "/edit-movie",
+    EditMovie: "/edit-movie/:id",
     NotFound: "*",
 };

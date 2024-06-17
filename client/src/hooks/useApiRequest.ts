@@ -27,7 +27,7 @@ const useApiRequest = <T>(url: string): UseApiRequestResponse<T> => {
             } else if (method === "PATCH") {
                 res = await axiosInstance.patch<T>(url, data);
             } else if (method === "DELETE") {
-                res = await axiosInstance.delete<T>(url, { data });
+                res = await axiosInstance.delete<T>(url, data);
             } else {
                 throw new Error("Unsupported method");
             }
