@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import morgan from "morgan";
-import logger from "../utils/logger.ts";
+import logger from "../utils/logger.js";
 
 // Get the current file's path and convert it to a directory path
 const currentFilePath = fileURLToPath(import.meta.url);

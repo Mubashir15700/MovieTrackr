@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { UserDocument } from "./userModel.ts";
+import { UserDocument } from "./userModel.js";
 
 interface MovieDetails {
     movieId: string;

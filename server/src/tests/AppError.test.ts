@@ -1,4 +1,4 @@
-import AppError from "../src/utils/AppError";
+import AppError from "../utils/AppError.js";
 
 describe("AppError class", () => {
     it("should create an instance with correct properties", () => {

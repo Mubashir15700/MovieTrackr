@@ -1,19 +1,27 @@
 import { Request, Response, NextFunction } from "express";
-import { v4 as uuidv4 } from 'uuid';
-import Watchlist from "../models/watchlistModel.ts";
-import AppError from "../utils/AppError.ts";
-import catchAsync from "../utils/catchAsync.ts";
-import { HttpStatusCode } from "../constants/httpStatusCodes.ts";
+import { v4 as uuidv4 } from "uuid";
+import Watchlist from "../models/watchlistModel.js";
+import AppError from "../utils/AppError.js";
+import catchAsync from "../utils/catchAsync.js";
+import { HttpStatusCode } from "../constants/httpStatusCodes.js";
 
 export const addMovieHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const { title, description, releaseYear, genre, isWatched, rating, review } = req.body;
+        const {
+            title,
+            description,
+            releaseYear,
+            genre,
+            isWatched,
+            rating,
+            review,
+        } = req.body;
 
         const userId = req.user?._id;
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
@@ -39,7 +47,7 @@ export const addMovieHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.CREATED).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -49,31 +57,39 @@ export const addMovieHandler = catchAsync(
 
 export const editMovieHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const { movieId, title, description, releaseYear, genre, isWatched, rating, review } = req.body;
+        const {
+            movieId,
+            title,
+            description,
+            releaseYear,
+            genre,
+            isWatched,
+            rating,
+            review,
+        } = req.body;
 
         const userId = req.user?._id;
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -92,7 +108,7 @@ export const editMovieHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -108,25 +124,24 @@ export const deleteMovieHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        watchlist.movies = watchlist.movies.filter(movie => movie.movieId !== movieId);
+        watchlist.movies = watchlist.movies.filter(
+            (movie) => movie.movieId !== movieId,
+        );
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -141,17 +156,16 @@ export const getMoviesHandler = catchAsync(
         if (!userId) {
             throw new AppError(
                 "User ID is required",
-                HttpStatusCode.BAD_REQUEST
+                HttpStatusCode.BAD_REQUEST,
             );
         }
 
-        const watchlist = await Watchlist.findOne({ user: userId }).populate('user');
+        const watchlist = await Watchlist.findOne({ user: userId }).populate(
+            "user",
+        );
 
         if (!watchlist) {
-            throw new AppError(
-                "Watchlist not found",
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
         res.status(HttpStatusCode.OK).json({
@@ -171,25 +185,24 @@ export const updateWatchedStatusHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -198,7 +211,7 @@ export const updateWatchedStatusHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -214,25 +227,24 @@ export const rateMovieHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -241,7 +253,7 @@ export const rateMovieHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -257,25 +269,24 @@ export const reviewMovieHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -284,7 +295,7 @@ export const reviewMovieHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -300,25 +311,24 @@ export const editReviewHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -327,7 +337,7 @@ export const editReviewHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },
@@ -343,25 +353,24 @@ export const deleteReviewHandler = catchAsync(
 
         if (!userId) {
             throw new AppError(
-                'User not authenticated or missing user ID',
+                "User not authenticated or missing user ID",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
 
-        let watchlist = await Watchlist.findOne({ user: userId });
+        const watchlist = await Watchlist.findOne({ user: userId });
 
         if (!watchlist) {
-            throw new AppError(
-                'Watchlist not found',
-                HttpStatusCode.NOT_FOUND,
-            );
+            throw new AppError("Watchlist not found", HttpStatusCode.NOT_FOUND);
         }
 
-        const index = watchlist.movies.findIndex(movie => movie.movieId === movieId);
+        const index = watchlist.movies.findIndex(
+            (movie) => movie.movieId === movieId,
+        );
 
         if (index === -1) {
             throw new AppError(
-                'Movie not found in watchlist',
+                "Movie not found in watchlist",
                 HttpStatusCode.NOT_FOUND,
             );
         }
@@ -370,7 +379,7 @@ export const deleteReviewHandler = catchAsync(
         await watchlist.save();
 
         res.status(HttpStatusCode.OK).json({
-            status: 'success',
+            status: "success",
             data: {
                 watchlist: watchlist.movies,
             },

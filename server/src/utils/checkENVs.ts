@@ -1,10 +1,12 @@
-import logger from "./logger.ts";
+import logger from "./logger.js";
 
 const checkEnvVariables = () => {
     const requiredEnvVariables = [
+        "NODE_ENV",
         "PORT",
         "DB_CONNECTION_STRING",
         "CORS_ORIGIN",
+        "JWT_SECRET_KEY",
     ];
 
     const missingVariables = requiredEnvVariables.filter(

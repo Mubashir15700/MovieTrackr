@@ -5,12 +5,12 @@ import cookieParser from "cookie-parser";
 import {
     morganMiddleware,
     morganWinstonMiddleware,
-} from "./middlewares/logging.ts";
-import checkEnvVariables from "./utils/checkENVs.ts";
-import corsOptions from "./configs/corsOptions.ts";
-import authRoutes from "./routes/authRoutes.ts";
-import watchlistRoutes from "./routes/watchlistRoutes.ts";
-import errorHandler from "./middlewares/errorHandler.ts";
+} from "./middlewares/logging.js";
+import checkEnvVariables from "./utils/checkENVs.js";
+import corsOptions from "./configs/corsOptions.js";
+import authRoutes from "./routes/authRoutes.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 checkEnvVariables();
 

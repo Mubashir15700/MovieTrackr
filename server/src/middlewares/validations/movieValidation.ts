@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
-import AppError from "../../utils/AppError.ts";
-import { HttpStatusCode } from "../../constants/httpStatusCodes.ts";
+import AppError from "../../utils/AppError.js";
+import { HttpStatusCode } from "../../constants/httpStatusCodes.js";
 
 export const validateMovie = [
     body("title").notEmpty().withMessage("Title is required"),

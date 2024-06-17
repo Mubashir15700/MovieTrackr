@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import User from "../models/userModel.ts";
-import setCookie from "../utils/setCookie.ts";
-import generateToken from "../utils/generateToken.ts";
-import AppError from "../utils/AppError.ts";
-import catchAsync from "../utils/catchAsync.ts";
-import { HttpStatusCode } from "../constants/httpStatusCodes.ts";
+import User from "../models/userModel.js";
+import setCookie from "../utils/setCookie.js";
+import generateToken from "../utils/generateToken.js";
+import AppError from "../utils/AppError.js";
+import catchAsync from "../utils/catchAsync.js";
+import { HttpStatusCode } from "../constants/httpStatusCodes.js";
 
 export const checkAuthHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -37,7 +37,7 @@ export const checkAuthHandler = catchAsync(
                     HttpStatusCode.UNAUTHORIZED,
                 );
             }
-            
+
             throw new AppError(
                 "Unexpected token error",
                 HttpStatusCode.UNAUTHORIZED,
