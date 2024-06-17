@@ -16,7 +16,7 @@ interface UserData {
             name: string;
         };
         token: string;
-    }
+    };
 }
 
 const Login = () => {

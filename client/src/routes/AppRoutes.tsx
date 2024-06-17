@@ -23,7 +23,7 @@ interface UserData {
             name: string;
         };
         token: string;
-    }
+    };
 }
 
 const AppRoutes = () => {

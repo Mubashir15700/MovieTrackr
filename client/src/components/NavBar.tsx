@@ -42,7 +42,7 @@ const NavBar = () => {
                 {loading ? "loading..." : ""} Logout
             </button>
         </div>
-    )
-}
+    );
+};
 
 export default NavBar;

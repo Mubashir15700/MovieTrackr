@@ -15,12 +15,19 @@ const MovieCard = () => {
             <p>Movie Description</p>
             <p>Release year, genre</p>
             <p>Rating</p>
-            <p>Review... <button onClick={() => setShowReviewField(true)}>Add/Edit</button></p>
-            {showReviewField ? <ReviewForm onReviewSubmit={handleReviewSubmit} /> : null}
+            <p>
+                Review...{" "}
+                <button onClick={() => setShowReviewField(true)}>
+                    Add/Edit
+                </button>
+            </p>
+            {showReviewField ? (
+                <ReviewForm onReviewSubmit={handleReviewSubmit} />
+            ) : null}
             <Link to="/edit-movie">Edit Movie</Link>
             <button>Remove</button>
         </div>
-    )
-}
+    );
+};
 
 export default MovieCard;

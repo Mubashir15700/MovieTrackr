@@ -1,6 +1,6 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { MovieSchema } from '../utils/validations/movieSchema';
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { MovieSchema } from "../utils/validations/movieSchema";
 
 interface MovieFormValues {
     title: string;
@@ -11,9 +11,9 @@ interface MovieFormValues {
 
 const MovieForm: React.FC = () => {
     const initialValues: MovieFormValues = {
-        title: '',
-        description: '',
-        releaseYear: '',
+        title: "",
+        description: "",
+        releaseYear: "",
         genre: [],
     };
 
@@ -34,17 +34,29 @@ const MovieForm: React.FC = () => {
                         <div>
                             <label htmlFor="title">Title</label>
                             <Field type="text" name="title" />
-                            <ErrorMessage name="title" component="div" className="error-message" />
+                            <ErrorMessage
+                                name="title"
+                                component="div"
+                                className="error-message"
+                            />
                         </div>
                         <div>
                             <label htmlFor="description">Description</label>
                             <Field as="textarea" name="description" />
-                            <ErrorMessage name="description" component="div" className="error-message" />
+                            <ErrorMessage
+                                name="description"
+                                component="div"
+                                className="error-message"
+                            />
                         </div>
                         <div>
                             <label htmlFor="releaseYear">Release Year</label>
                             <Field type="text" name="releaseYear" />
-                            <ErrorMessage name="releaseYear" component="div" className="error-message" />
+                            <ErrorMessage
+                                name="releaseYear"
+                                component="div"
+                                className="error-message"
+                            />
                         </div>
                         <div>
                             <label htmlFor="genre">Genre</label>
@@ -57,10 +69,14 @@ const MovieForm: React.FC = () => {
                                 <option value="Romance">Romance</option>
                                 <option value="Thriller">Thriller</option>
                             </Field>
-                            <ErrorMessage name="genre" component="div" className="error-message" />
+                            <ErrorMessage
+                                name="genre"
+                                component="div"
+                                className="error-message"
+                            />
                         </div>
                         <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Adding...' : 'Add Movie'}
+                            {isSubmitting ? "Adding..." : "Add Movie"}
                         </button>
                     </Form>
                 )}

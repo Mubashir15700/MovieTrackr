@@ -1,6 +1,6 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { ReviewSchema } from '../utils/validations/reviewSchema';
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ReviewSchema } from "../utils/validations/reviewSchema";
 
 interface ReviewFormValues {
     review: string;
@@ -12,10 +12,13 @@ interface ReviewFormProps {
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmit }) => {
     const initialValues: ReviewFormValues = {
-        review: ''
+        review: "",
     };
 
-    const handleSubmit = async (values: ReviewFormValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const handleSubmit = async (
+        values: ReviewFormValues,
+        { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+    ) => {
         console.log(values);
         onReviewSubmit();
         setSubmitting(false);
@@ -34,10 +37,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmit }) => {
                         <div>
                             <label htmlFor="review">Review</label>
                             <Field as="textarea" name="review" />
-                            <ErrorMessage name="review" component="div" className="error-message" />
+                            <ErrorMessage
+                                name="review"
+                                component="div"
+                                className="error-message"
+                            />
                         </div>
                         <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Adding...' : 'Add Review'}
+                            {isSubmitting ? "Adding..." : "Add Review"}
                         </button>
                     </Form>
                 )}

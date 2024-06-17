@@ -9,6 +9,6 @@ const MovieList = () => {
             <MovieCard />
         </>
     );
-}
+};
 
 export default MovieList;
