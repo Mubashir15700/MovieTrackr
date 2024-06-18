@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { addMovie, editMovie } from "../redux/slices/watchlistSlice";
-import { MovieSchema } from "../utils/validations/movieSchema";
-import useApiRequest from "../hooks/useApiRequest";
-import { Movie } from "../interfaces/Movie";
 import { RootState } from "../redux/rootReducer";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { MovieSchema } from "../utils/validations/movieSchema";
+import { addUpdateResponse } from "../interfaces/Movie";
+import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 interface MovieFormValues {
     movieId?: string;
@@ -15,13 +15,6 @@ interface MovieFormValues {
     description: string;
     releaseYear: number | "";
     genre: string[];
-}
-
-interface WatchlistResponse {
-    status: string;
-    data: {
-        movie: Movie;
-    };
 }
 
 interface MovieFormProps {
@@ -33,8 +26,8 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
     const endPoint =
         purpose === "add" ? "/watchlist/movies/add" : `/watchlist/movies/${id}`;
 
-    const { response, error, loading, sendRequest } =
-        useApiRequest<WatchlistResponse>(endPoint);
+    const { response, error, sendRequest } =
+        useApiRequest<addUpdateResponse>(endPoint);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,7 +40,11 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                 : dispatch(editMovie(movie));
             navigate("/");
         } else if (error) {
-            toast.error(error?.response?.data?.message);
+            handleApiError(
+                purpose === "add"
+                    ? "Adding"
+                    : "Editing" + "movie failed", error,
+            );
         }
     }, [response, error, navigate]);
 
@@ -56,8 +53,9 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
             const method = purpose === "add" ? "POST" : "PUT";
             await sendRequest(method, values);
         } catch (err) {
-            console.error("Login error:", err);
-            toast.error("Login failed. Please try again.");
+            handleApiError(purpose === "add"
+                ? "Adding"
+                : "Editing" + "movie failed", err);
         }
     };
 

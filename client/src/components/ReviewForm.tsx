@@ -7,26 +7,26 @@ interface ReviewFormValues {
 }
 
 interface ReviewFormProps {
-    onReviewSubmit: () => void;
+    review: string;
+    onReviewSubmit: (review: string) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ review, onReviewSubmit }) => {
     const initialValues: ReviewFormValues = {
-        review: "",
+        review,
     };
 
     const handleSubmit = async (
-        values: ReviewFormValues,
+        value: ReviewFormValues,
         { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
     ) => {
-        console.log(values);
-        onReviewSubmit();
+        onReviewSubmit(value.review);
         setSubmitting(false);
     };
 
     return (
         <div>
-            <h1>Add a Review</h1>
+            <h1>{review.length ? "Update your review" : "Add a Review"}</h1>
             <Formik
                 initialValues={initialValues}
                 validationSchema={ReviewSchema}

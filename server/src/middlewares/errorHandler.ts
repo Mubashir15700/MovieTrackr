@@ -23,7 +23,6 @@ const errorHandler = (
         message = err.message || "Internal Server Error";
     }
 
-    // Log the error
     logger.error(`Error: ${message}, Status Code: ${statusCode}`);
 
     // Ensure response headers are sent
@@ -31,7 +30,6 @@ const errorHandler = (
         return next(err);
     }
 
-    // Respond with JSON error message
     res.status(statusCode).json({
         status: "error",
         statusCode,

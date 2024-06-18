@@ -1,19 +1,21 @@
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
-import { RouteVariables } from "../utils/routeVariables";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/slices/authSlice";
-import useApiRequest from "../hooks/useApiRequest";
+import { RouteVariables } from "../utils/routeVariables";
 import ProtectedRoute from "../components/ProtectedRoutes";
 import AuthRoute from "../components/AuthRoutes";
-import SignUp from "../pages/SignUp";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import AddMovie from "../pages/AddMovie";
-import EditMovie from "../pages/EditMovie";
-import NotFound from "../pages/NotFound";
+import {
+    Login,
+    SignUp,
+    Dashboard,
+    AddMovie,
+    EditMovie,
+    NotFound,
+} from "../pages/index";
 import { AuthResponse } from "../interfaces/AuthResponse";
+import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 const AppRoutes = () => {
     const { response, error, loading, sendRequest } =
@@ -26,8 +28,7 @@ const AppRoutes = () => {
             try {
                 await sendRequest("GET");
             } catch (err) {
-                console.error("Check authentication error:", err);
-                toast.error("Check authentication failed. Please login.");
+                handleApiError("Check authentication error", err);
             }
         };
 
@@ -45,8 +46,7 @@ const AppRoutes = () => {
         }
 
         if (error) {
-            console.log("Check authentication error:", error);
-            toast.error(error?.response?.data?.message);
+            handleApiError("Checking authentication failed", error);
         }
     }, [response, error, dispatch]);
 

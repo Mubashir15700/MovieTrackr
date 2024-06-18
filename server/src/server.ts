@@ -15,7 +15,7 @@ connectToDatabase()
         const server = app.listen(port, () => {
             logger.info(`Server is running at http://localhost:${port}`);
 
-            // Log important information or instructions
+            // Log important information
             logger.info("Press Ctrl+C to gracefully shut down the server.");
         });
 

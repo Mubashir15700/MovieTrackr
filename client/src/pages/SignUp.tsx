@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
+import { loginSuccess } from "../redux/slices/authSlice";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "../utils/validations/signUpSchema";
-import { loginSuccess } from "../redux/slices/authSlice";
-import useApiRequest from "../hooks/useApiRequest";
 import { AuthResponse } from "../interfaces/AuthResponse";
+import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 const SignUp = () => {
     const { response, error, loading, sendRequest } =
@@ -26,7 +26,7 @@ const SignUp = () => {
             dispatch(loginSuccess({ user }));
             navigate("/");
         } else if (error) {
-            toast.error(error?.response?.data?.message);
+            handleApiError("Signup error", error);
         }
     }, [response, error, navigate]);
 
@@ -39,8 +39,7 @@ const SignUp = () => {
         try {
             await sendRequest("POST", values);
         } catch (err) {
-            console.error("Signup error:", err);
-            toast.error("Signup failed. Please try again.");
+            handleApiError("Signup error", err);
         }
     };
 

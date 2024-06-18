@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { RouteVariables } from "../utils/routeVariables";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
 import { ChildComponentProps } from "../interfaces/ChildComponentProps";
+import { RouteVariables } from "../utils/routeVariables";
 
 const ProtectedRoute: React.FC<ChildComponentProps> = ({ children }) => {
     const isAuthenticated = useSelector(

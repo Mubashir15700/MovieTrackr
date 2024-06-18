@@ -1,18 +1,15 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
-import useApiRequest from "../hooks/useApiRequest";
 import { logout } from "../redux/slices/authSlice";
 import ConfirmationDialog from "./ConfirmationDialog";
-
-interface LogoutResponse {
-    status: string;
-}
+import { statusStringResponse } from "../interfaces/Movie";
+import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 const NavBar = () => {
     const { response, error, loading, sendRequest } =
-        useApiRequest<LogoutResponse>("/auth/logout");
+        useApiRequest<statusStringResponse>("/auth/logout");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,7 +19,7 @@ const NavBar = () => {
             dispatch(logout());
             navigate("/login");
         } else if (error) {
-            toast.error(error?.response?.data?.message);
+            handleApiError("Failed to logout", error);
         }
     }, [response, , error, navigate]);
 
@@ -39,8 +36,7 @@ const NavBar = () => {
             try {
                 await sendRequest("GET");
             } catch (err) {
-                console.error("Logout error:", err);
-                toast.error("Logout failed. Please try again.");
+                handleApiError("Logout failed. Please try again", err);
             }
         }
     };

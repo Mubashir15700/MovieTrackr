@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { updateWatchStatus } from "../redux/slices/watchlistSlice";
+import { statusStringResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 interface MovieWatchStatusSelectProps {
     movieId: string;
     isWatched: boolean;
-}
-
-interface UpdateMovieStatusResponse {
-    status: string;
 }
 
 const MovieWatchStatusSelect: React.FC<MovieWatchStatusSelectProps> = ({
@@ -19,8 +16,8 @@ const MovieWatchStatusSelect: React.FC<MovieWatchStatusSelectProps> = ({
 }) => {
     const dispatch = useDispatch();
 
-    const { response, error, loading, sendRequest } =
-        useApiRequest<UpdateMovieStatusResponse>(
+    const { response, error, sendRequest } =
+        useApiRequest<statusStringResponse>(
             `/watchlist/movies/${movieId}/updateWatchedStatus`,
         );
 
@@ -30,11 +27,7 @@ const MovieWatchStatusSelect: React.FC<MovieWatchStatusSelectProps> = ({
         }
 
         if (error) {
-            console.log("Error updating watch status:", error);
-            toast.error(
-                "Error updating watch status:",
-                error?.response?.data?.message,
-            );
+            handleApiError("Error updating watch status", error);
         }
     }, [response, error, dispatch]);
 

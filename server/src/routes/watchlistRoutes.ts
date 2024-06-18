@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
+    getMoviesHandler,
     addMovieHandler,
     editMovieHandler,
     deleteMovieHandler,
-    getMoviesHandler,
     updateWatchedStatusHandler,
     rateMovieHandler,
     reviewMovieHandler,
@@ -15,10 +15,10 @@ import { validateReview } from "../middlewares/validations/reviewValidation.js";
 
 const router = Router();
 
+router.get("/movies", checkAuthStatus, getMoviesHandler);
 router.post("/movies/add", checkAuthStatus, validateMovie, addMovieHandler);
 router.put("/movies/:id", checkAuthStatus, validateMovie, editMovieHandler);
 router.delete("/movies/:id", checkAuthStatus, deleteMovieHandler);
-router.get("/movies", checkAuthStatus, getMoviesHandler);
 router.patch(
     "/movies/:id/updateWatchedStatus",
     checkAuthStatus,

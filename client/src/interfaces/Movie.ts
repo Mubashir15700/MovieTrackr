@@ -8,3 +8,14 @@ export interface Movie {
     rating?: number;
     review?: string;
 }
+
+export interface statusStringResponse {
+    status: string;
+}
+
+export interface addUpdateResponse {
+    status: string;
+    data: {
+        movie: Movie;
+    };
+}

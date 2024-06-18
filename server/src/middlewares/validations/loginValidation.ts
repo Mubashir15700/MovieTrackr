@@ -6,7 +6,7 @@ import { HttpStatusCode } from "../../constants/httpStatusCodes.js";
 export const validateLogin = [
     body("email").isEmail().withMessage("Invalid email address"),
     body("password").notEmpty().withMessage("Password is required"),
-    // Add more validation rules as needed
+
     (req: Request, res: Response, next: NextFunction) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

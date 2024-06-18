@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { HttpStatusCode } from "../constants/httpStatusCodes.js";
-import AppError from "../utils/AppError.js";
+import jwt from "jsonwebtoken";
 import User, { UserDocument } from "../models/userModel.js";
+import AppError from "../utils/AppError.js";
+import { HttpStatusCode } from "../constants/httpStatusCodes.js";
 
 declare module "express-serve-static-core" {
     interface Request {

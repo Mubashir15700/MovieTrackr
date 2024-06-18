@@ -5,6 +5,34 @@ import AppError from "../utils/AppError.js";
 import catchAsync from "../utils/catchAsync.js";
 import { HttpStatusCode } from "../constants/httpStatusCodes.js";
 
+export const getMoviesHandler = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req?.user?._id;
+
+        if (!userId) {
+            throw new AppError(
+                "User ID is required",
+                HttpStatusCode.BAD_REQUEST,
+            );
+        }
+
+        const existingWatchlist = await Watchlist.findOne({
+            user: userId,
+        }).populate("user");
+
+        const watchlist = existingWatchlist
+            ? existingWatchlist
+            : { movies: [] };
+
+        res.status(HttpStatusCode.OK).json({
+            status: "success",
+            data: {
+                watchlist: watchlist.movies,
+            },
+        });
+    },
+);
+
 export const addMovieHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         const {
@@ -135,34 +163,6 @@ export const deleteMovieHandler = catchAsync(
     },
 );
 
-export const getMoviesHandler = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-        const userId = req?.user?._id;
-
-        if (!userId) {
-            throw new AppError(
-                "User ID is required",
-                HttpStatusCode.BAD_REQUEST,
-            );
-        }
-
-        const existingWatchlist = await Watchlist.findOne({
-            user: userId,
-        }).populate("user");
-
-        const watchlist = existingWatchlist
-            ? existingWatchlist
-            : { movies: [] };
-
-        res.status(HttpStatusCode.OK).json({
-            status: "success",
-            data: {
-                watchlist: watchlist.movies,
-            },
-        });
-    },
-);
-
 export const updateWatchedStatusHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         const { movieId, isWatched } = req.body;
@@ -237,7 +237,7 @@ export const rateMovieHandler = catchAsync(
         res.status(HttpStatusCode.OK).json({
             status: "success",
             data: {
-                watchlist: watchlist.movies,
+                movie: watchlist.movies[index],
             },
         });
     },
@@ -279,7 +279,7 @@ export const reviewMovieHandler = catchAsync(
         res.status(HttpStatusCode.OK).json({
             status: "success",
             data: {
-                watchlist: watchlist.movies,
+                movie: watchlist.movies[index],
             },
         });
     },
@@ -287,7 +287,7 @@ export const reviewMovieHandler = catchAsync(
 
 export const deleteReviewHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-        const { movieId } = req.body;
+        const movieId = req.params.id;
 
         const userId = req.user?._id;
 
@@ -321,7 +321,7 @@ export const deleteReviewHandler = catchAsync(
         res.status(HttpStatusCode.OK).json({
             status: "success",
             data: {
-                watchlist: watchlist.movies,
+                movie: watchlist.movies[index],
             },
         });
     },

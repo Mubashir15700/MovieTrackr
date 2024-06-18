@@ -1,15 +1,16 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import MovieCard from "./MovieCard";
-import useApiRequest from "../hooks/useApiRequest";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
 import {
     fetchWatchlistStart,
     fetchWatchlistSuccess,
     fetchWatchlistFailure,
 } from "../redux/slices/watchlistSlice";
+import MovieCard from "./MovieCard";
 import { Movie } from "../interfaces/Movie";
+import useApiRequest from "../hooks/useApiRequest";
+import { handleApiError } from "../utils/handleApiError";
 
 interface WatchlistResponse {
     status: string;
@@ -32,8 +33,7 @@ const MovieList = () => {
                 dispatch(fetchWatchlistStart());
                 await sendRequest("GET");
             } catch (err: any) {
-                console.error("Fetch movies error:", err);
-                toast.error("Failed to fetch movies. Please try again.");
+                handleApiError("Failed to fetch movies", err);
                 dispatch(fetchWatchlistFailure(err.message));
             }
         };
@@ -47,8 +47,7 @@ const MovieList = () => {
         }
 
         if (error) {
-            console.log("Error fetching movies:", error);
-            toast.error(error?.response?.data?.message);
+            handleApiError("Error fetching movies", error);
             dispatch(fetchWatchlistFailure(error.message));
         }
     }, [response, error, dispatch]);
@@ -60,9 +59,13 @@ const MovieList = () => {
     return (
         <>
             <div>MovieList</div>
-            {movies.map((movie, index) => (
-                <MovieCard key={index} movie={movie} />
-            ))}
+            {movies.length ? (
+                movies.map((movie, index) => (
+                    <MovieCard key={index} movie={movie} />
+                ))
+            ) : (
+                <div>No movies in your watchlist.</div>
+            )}
         </>
     );
 };
