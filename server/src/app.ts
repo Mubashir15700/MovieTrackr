@@ -28,6 +28,10 @@ app.use(morganWinstonMiddleware); // Logs to Winston logger only
 app.use("/api/auth", authRoutes);
 app.use("/api/watchlist", watchlistRoutes);
 
+app.get("/test", (req, res) => {
+    res.send("Hello World!");
+});
+
 // Global error handling middleware
 app.use(errorHandler);
 
