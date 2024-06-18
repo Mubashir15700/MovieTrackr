@@ -18,13 +18,12 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
 
     const dispatch = useDispatch();
 
-    const { response, error, sendRequest } = useApiRequest<addUpdateResponse>(
+    const { response, error, loading, sendRequest } = useApiRequest<addUpdateResponse>(
         `/watchlist/movies/${movieId}/review`,
     );
 
     const handleReviewSubmit = (review: string) => {
         sendRequest("POST", { movieId, review });
-        setShowReviewField(false);
     };
 
     const handleDeleteReview = () => {
@@ -39,6 +38,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
         if (error) {
             handleApiError("Error reviewing movie", error);
         }
+
+        setShowReviewField(false);
     }, [response, error, dispatch]);
 
     return (
@@ -46,21 +47,24 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
             {review?.length && <p>Review: </p>}
             <p>
                 {review}
-                <div className={styles.reviewButtons}>
-                    <button onClick={() => setShowReviewField(true)}>
-                        {review ? "Edit" : "Add"} review
-                    </button>
-                    {review?.length && <button onClick={handleDeleteReview}>
-                        Delete Review
-                    </button>
-                    }
-                </div>
+                {!showReviewField && (
+                    <div className={styles.reviewButtons}>
+                        <button onClick={() => setShowReviewField(true)}>
+                            {review ? "Edit" : "Add"} review
+                        </button>
+                        {review?.length && <button onClick={handleDeleteReview}>
+                            {loading ? "Deleting..." : "Delete Review"}
+                        </button>
+                        }
+                    </div>
+                )}
             </p>
             {showReviewField ? (
                 <ReviewForm
                     review={review}
                     setShowReviewField={setShowReviewField}
                     onReviewSubmit={handleReviewSubmit}
+                    loading={loading}
                 />
             ) : null}
         </div>

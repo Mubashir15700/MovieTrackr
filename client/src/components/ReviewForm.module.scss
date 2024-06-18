@@ -7,6 +7,10 @@
         width: 100%;
     }
 
+    .reviewSubmitButton {
+        margin-right: 5px;
+    }
+
     .errorMessage {
         @extend .errorMessage;
         margin-bottom: 10px;

@@ -100,6 +100,10 @@ const watchlistSlice = createSlice({
                 state.movies[index].review = undefined;
             }
         },
+
+        clearWatchlist() {
+            return initialState;
+        },
     },
 });
 
@@ -114,6 +118,7 @@ export const {
     rateMovie,
     reviewMovie,
     deleteReview,
+    clearWatchlist
 } = watchlistSlice.actions;
 
 export default watchlistSlice.reducer;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteMovie } from "../redux/slices/watchlistSlice";
+import CustomTooltip from "./CustomToolTip";
 import ConfirmationDialog from "./ConfirmationDialog";
 import MovieWatchStatusSelect from "./MovieWatchStatusSelect";
 import ReviewSection from "./ReviewSection";
@@ -56,17 +57,29 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
                     <span className={styles.movieYear}>({movie.releaseYear})</span>
                 </h5>
                 <div>
-                    <Link to={`/edit-movie/${movie.movieId}`}>
+                    <Link to={`/edit-movie/${movie.movieId}`} className={styles.movieEditButton} id="editMovieIcon">
                         <FaPen />
                     </Link>
-                    <button className={styles.movieDeleteButton} onClick={handleRemoveMovie}>
+                    <CustomTooltip
+                        id="edit-movie-icon-tooltip"
+                        anchorSelect="#editMovieIcon"
+                        place="bottom"
+                        content="Edit this movie"
+                    />
+                    <button className={styles.movieDeleteButton} id="deleteMovieIcon" onClick={handleRemoveMovie}>
                         <MdDelete />
                     </button>
+                    <CustomTooltip
+                        id="delete-movie-icon-tooltip"
+                        anchorSelect="#deleteMovieIcon"
+                        place="bottom"
+                        content="Remove this movie"
+                    />
                 </div>
             </div>
             <p className={styles.movieDescription}>{movie.description}</p>
             <div className={styles.movieGenreWatchStatus}>
-                <span>genre: {movie.genre}</span> 
+                <span>genre: {movie.genre}</span>
                 <MovieWatchStatusSelect
                     movieId={movie.movieId}
                     isWatched={movie.isWatched!}

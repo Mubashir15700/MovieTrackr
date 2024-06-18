@@ -83,7 +83,7 @@ const SignUp = () => {
                                 <ErrorMessage className={styles.errorMessage} name="confirmPassword" component="div" />
                             </div>
                             <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
-                                {loading ? "Loading..." : ""} Signup
+                                {loading ? "Signing up..." : "Signup"} 
                             </button>
                             <p>Already have an acount?<Link to={"/login"}>Login</Link></p>
                             {error && (

@@ -11,9 +11,10 @@ interface ReviewFormProps {
     review: string;
     setShowReviewField: React.Dispatch<React.SetStateAction<boolean>>;
     onReviewSubmit: (review: string) => void;
+    loading: boolean;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onReviewSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onReviewSubmit, loading }) => {
     const initialValues: ReviewFormValues = {
         review,
     };
@@ -44,8 +45,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onR
                                 className={styles.errorMessage}
                             />
                         </div>
-                        <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Adding..." : "Add Review"}
+                        <button type="submit" disabled={isSubmitting} className={styles.reviewSubmitButton}>
+                            {loading ? "Submitting..." : "Submit"}
                         </button>
                         <button onClick={() => setShowReviewField(false)}>
                             Discard

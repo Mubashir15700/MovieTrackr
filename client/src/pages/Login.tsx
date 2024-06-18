@@ -64,7 +64,7 @@ const Login = () => {
                                 <ErrorMessage className={styles.errorMessage} name="password" component="div" />
                             </div>
                             <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
-                                {loading ? "Loading..." : "Login"}
+                                {loading ? "Loging in..." : "Login"}
                             </button>
                             <p>Don't have an acount?<Link to={"/signup"}>Signup</Link></p>
                             {error && (
