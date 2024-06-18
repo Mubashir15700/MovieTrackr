@@ -1,6 +1,0 @@
-{
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "https://movie-watchlist-sooty.vercel.app/api/$1" }
-  ]
-}
