@@ -5,6 +5,7 @@ interface CookieOptions {
     httpOnly: boolean;
     secure: boolean;
     sameSite?: "strict" | "lax" | "none" | boolean;
+    partitioned: boolean;
 }
 
 const setCookie = (
@@ -18,7 +19,9 @@ const setCookie = (
         httpOnly: true,
         // secure: process.env.NODE_ENV === "production",
         secure: true,
-        sameSite: "strict",
+        // sameSite: "strict",
+        sameSite: "none",
+        partitioned: true
     };
 
     const mergedOptions = { ...defaultOptions, ...options };
