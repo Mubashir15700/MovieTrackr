@@ -16,7 +16,8 @@ const setCookie = (
     const defaultOptions: CookieOptions = {
         maxAge: 60000 * 60 * 24 * 7,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        // secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
     };
 
