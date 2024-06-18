@@ -9,6 +9,9 @@ import RatingSection from "./RatingSection";
 import { Movie, statusStringResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import { FaPen } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import styles from "./MovieCard.module.scss";
 
 const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
     const dispatch = useDispatch();
@@ -46,31 +49,36 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
     }, [response, error, dispatch]);
 
     return (
-        <div
-            style={{
-                border: "1px solid black",
-                padding: "10px",
-                marginBottom: "10px",
-            }}
-        >
-            <h5>Title {movie.title}</h5>
-            <p>{movie.description}</p>
-            <p>
-                Release year: {movie.releaseYear}, genre: {movie.genre}
-            </p>
-            <p>{movie.isWatched ? "Watched" : "Unwatched"} </p>
-            <MovieWatchStatusSelect
-                movieId={movie.movieId}
-                isWatched={movie.isWatched!}
-            />
+        <div className={styles.movieCard}>
+            <div className={styles.movieCardHead}>
+                <h5 className={styles.movieTitle}>
+                    {movie.title}
+                    <span className={styles.movieYear}>({movie.releaseYear})</span>
+                </h5>
+                <div>
+                    <Link to={`/edit-movie/${movie.movieId}`}>
+                        <FaPen />
+                    </Link>
+                    <button className={styles.movieDeleteButton} onClick={handleRemoveMovie}>
+                        <MdDelete />
+                    </button>
+                </div>
+            </div>
+            <p className={styles.movieDescription}>{movie.description}</p>
+            <div className={styles.movieGenreWatchStatus}>
+                <span>genre: {movie.genre}</span> 
+                <MovieWatchStatusSelect
+                    movieId={movie.movieId}
+                    isWatched={movie.isWatched!}
+                />
+            </div>
+            <hr />
             <RatingSection movieId={movie.movieId} rating={movie.rating!} />
             <ReviewSection
                 movieId={movie.movieId}
                 rating={movie.rating!}
                 review={movie.review!}
             />
-            <Link to={`/edit-movie/${movie.movieId}`}>Edit Movie</Link>
-            <button onClick={handleRemoveMovie}>Remove</button>
         </div>
     );
 };

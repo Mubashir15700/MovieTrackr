@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ReviewSchema } from "../utils/validations/reviewSchema";
+import styles from "./ReviewForm.module.scss";
 
 interface ReviewFormValues {
     review: string;
@@ -8,10 +9,11 @@ interface ReviewFormValues {
 
 interface ReviewFormProps {
     review: string;
+    setShowReviewField: React.Dispatch<React.SetStateAction<boolean>>;
     onReviewSubmit: (review: string) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ review, onReviewSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onReviewSubmit }) => {
     const initialValues: ReviewFormValues = {
         review,
     };
@@ -25,8 +27,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ review, onReviewSubmit }) => {
     };
 
     return (
-        <div>
-            <h1>{review.length ? "Update your review" : "Add a Review"}</h1>
+        <div className={styles.reviewFormContainer}>
+            <h4>{review?.length ? "Update your review" : "Add a Review"}</h4>
             <Formik
                 initialValues={initialValues}
                 validationSchema={ReviewSchema}
@@ -35,16 +37,18 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ review, onReviewSubmit }) => {
                 {({ isSubmitting }) => (
                     <Form>
                         <div>
-                            <label htmlFor="review">Review</label>
-                            <Field as="textarea" name="review" />
+                            <Field as="textarea" name="review" className={styles.input} />
                             <ErrorMessage
                                 name="review"
                                 component="div"
-                                className="error-message"
+                                className={styles.errorMessage}
                             />
                         </div>
                         <button type="submit" disabled={isSubmitting}>
                             {isSubmitting ? "Adding..." : "Add Review"}
+                        </button>
+                        <button onClick={() => setShowReviewField(false)}>
+                            Discard
                         </button>
                     </Form>
                 )}

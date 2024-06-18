@@ -1,0 +1,64 @@
+@import '../styles/elements/submitButton.scss';
+
+.navBarContainer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #000;
+    padding: 10px 40px;
+    top: 0;
+    position: sticky;
+
+    h1 {
+        margin: 5px 0;
+        @media (max-width: 576px) {
+            font-size: 1.3rem;
+        }
+    }
+
+    .addMovieLink {
+        @extend .submitButton;
+        text-decoration: none;
+        padding: 5px;
+        width: 50px;
+        margin-right: 10px;
+    }
+
+    .logoutButton {
+        @extend .submitButton;
+        background-color: #660000;
+        width: 50px;
+    }
+
+    .logoutButton:hover {
+        background-color: #990000;
+    }
+
+    .dropdownMenuWrapper {
+        display: none;
+    }
+
+    .menuIcon {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .navLinks {
+            display: none;
+        }
+
+        .dropdownMenuWrapper, .menuIcon {
+            display: block;
+        }
+
+        .dropdownMenu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    }
+}

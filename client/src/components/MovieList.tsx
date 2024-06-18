@@ -10,6 +10,7 @@ import MovieCard from "./MovieCard";
 import { Movie } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import styles from "./MovieList.module.scss";
 
 interface WatchlistResponse {
     status: string;
@@ -57,13 +58,15 @@ const MovieList = () => {
 
     return (
         <>
-            <div>MovieList</div>
-            {movies.length ? (
-                movies.map((movie, index) => (
-                    <MovieCard key={index} movie={movie} />
-                ))
+            <h4>Your Watchlist</h4>
+            {movies?.length ? (
+                <div className={styles.movieCardContainer}>
+                    {movies.map((movie, index) => (
+                        <MovieCard key={index} movie={movie} />
+                    ))}
+                </div>
             ) : (
-                <div>No movies in your watchlist.</div>
+                <div>Your watchlist is empty</div>
             )}
         </>
     );

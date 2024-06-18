@@ -1,0 +1,50 @@
+@import '../styles/elements/submitButton.scss';
+@import '../styles/elements/globalErrorDisplay.scss';
+@import '../styles/elements/inputErrorDisplayer.scss';
+
+.movieFormContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    padding: 20px;
+
+    .movieForm {
+        width: 50%;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        padding: 20px;
+
+        @media (max-width: 768px) {
+            width: 90%;
+        }
+
+        .formGroup {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .input {
+            height: 30px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .descriptionInput {
+            @extend .input;
+            height: 50px;
+            resize: none
+        }
+
+        .genreInput {
+            @extend .input;
+            height: 100px;
+        }
+    }
+}

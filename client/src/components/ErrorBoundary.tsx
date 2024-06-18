@@ -1,5 +1,6 @@
 import { Component, ErrorInfo } from "react";
 import { ChildComponentProps } from "../interfaces/ChildComponentProps";
+import styles from "./ErrorBoundary.module.scss"
 
 interface State {
     hasError: boolean;
@@ -20,7 +21,7 @@ class ErrorBoundary extends Component<ChildComponentProps, State> {
 
     render() {
         if (this.state.hasError) {
-            return <h1>Something went wrong.</h1>;
+            return <div className={styles.errorBoundaryContainer}>Something went wrong.</div>;
         }
 
         return this.props.children;

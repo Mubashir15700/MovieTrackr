@@ -5,6 +5,7 @@ import ReviewForm from "./ReviewForm";
 import { addUpdateResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import styles from "./ReviewSection.module.scss"
 
 interface ReviewSectionProps {
     movieId: string;
@@ -41,21 +42,28 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
     }, [response, error, dispatch]);
 
     return (
-        <>
+        <div className={styles.reviewContainer}>
+            {review?.length && <p>Review: </p>}
             <p>
                 {review}
-                <button onClick={() => setShowReviewField(true)}>
-                    Add/Edit
-                </button>
-                <button onClick={handleDeleteReview}>Delete Review</button>
+                <div className={styles.reviewButtons}>
+                    <button onClick={() => setShowReviewField(true)}>
+                        {review ? "Edit" : "Add"} review
+                    </button>
+                    {review?.length && <button onClick={handleDeleteReview}>
+                        Delete Review
+                    </button>
+                    }
+                </div>
             </p>
             {showReviewField ? (
                 <ReviewForm
                     review={review}
+                    setShowReviewField={setShowReviewField}
                     onReviewSubmit={handleReviewSubmit}
                 />
             ) : null}
-        </>
+        </div>
     );
 };
 

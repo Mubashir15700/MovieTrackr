@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
@@ -6,8 +6,16 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import { statusStringResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import { FaSignOutAlt, FaPlus, FaCaretSquareDown, FaCaretSquareUp } from 'react-icons/fa';
+import styles from "./NavBar.module.scss";
 
 const NavBar = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     const { response, error, loading, sendRequest } =
         useApiRequest<statusStringResponse>("/auth/logout");
 
@@ -42,12 +50,37 @@ const NavBar = () => {
     };
 
     return (
-        <div>
-            <h1>Movie Watchlist</h1>
-            <Link to="/add-movie">Add Movie</Link>
-            <button onClick={handleLogout}>
-                {loading ? "loading..." : ""} Logout
-            </button>
+        <div className={styles.navBarContainer}>
+            <div>
+                <h1>MovieTrackr</h1>
+            </div>
+            <div className={styles.navLinks}>
+                <Link to="/add-movie">
+                    <button className={styles.addMovieLink}>
+                        <FaPlus />
+                    </button>
+                </Link>
+                <button className={styles.logoutButton} onClick={handleLogout}>
+                    {loading ? "Logging out..." : ""} <FaSignOutAlt />
+                </button>
+            </div>
+            <div className={styles.dropdownMenuWrapper}>
+                <div className={styles.menuIcon} onClick={toggleDropdown}>
+                    {isDropdownOpen ? <FaCaretSquareUp /> : <FaCaretSquareDown />}
+                </div>
+                {isDropdownOpen && (
+                    <div className={styles.dropdownMenu}>
+                        <Link to="/add-movie">
+                            <button className={styles.addMovieLink} onClick={toggleDropdown}>
+                                <FaPlus />
+                            </button>
+                        </Link>
+                        <button className={styles.logoutButton} onClick={handleLogout}>
+                            {loading ? "Logging out..." : ""} <FaSignOutAlt />
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

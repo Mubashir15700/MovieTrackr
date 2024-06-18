@@ -8,6 +8,7 @@ import { MovieSchema } from "../utils/validations/movieSchema";
 import { addUpdateResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import styles from "./MovieForm.module.scss";
 
 interface MovieFormValues {
     movieId?: string;
@@ -72,45 +73,45 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
     };
 
     return (
-        <div>
-            <h1>{purpose === "add" ? "Add a New Movie" : "Edit Movie"}</h1>
+        <div className={styles.movieFormContainer}>
             <Formik
                 initialValues={initialValues}
                 validationSchema={MovieSchema}
                 onSubmit={handleSubmit}
             >
                 {({ isSubmitting }) => (
-                    <Form>
-                        <div>
-                            <label htmlFor="title">Title</label>
-                            <Field type="text" name="title" />
+                    <Form className={styles.movieForm}>
+                        <h1>{purpose === "add" ? "Add a New Movie" : "Edit Movie"}</h1>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="title" className={styles.label}>Title</label>
+                            <Field type="text" name="title" className={styles.input} />
                             <ErrorMessage
                                 name="title"
                                 component="div"
-                                className="error-message"
+                                className={styles.errorMessage}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="description">Description</label>
-                            <Field as="textarea" name="description" />
+                        <div className={styles.formGroup}>
+                            <label htmlFor="description" className={styles.label}>Description</label>
+                            <Field as="textarea" name="description" className={styles.descriptionInput} />
                             <ErrorMessage
                                 name="description"
                                 component="div"
-                                className="error-message"
+                                className={styles.errorMessage}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="releaseYear">Release Year</label>
-                            <Field type="text" name="releaseYear" />
+                        <div className={styles.formGroup}>
+                            <label htmlFor="releaseYear" className={styles.label}>Release Year</label>
+                            <Field type="text" name="releaseYear" className={styles.input} />
                             <ErrorMessage
                                 name="releaseYear"
                                 component="div"
-                                className="error-message"
+                                className={styles.errorMessage}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="genre">Genre</label>
-                            <Field as="select" name="genre" multiple>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="genre" className={styles.label}>Genre</label>
+                            <Field as="select" name="genre" className={styles.genreInput} multiple>
                                 <option value="Action">Action</option>
                                 <option value="Comedy">Comedy</option>
                                 <option value="Drama">Drama</option>
@@ -122,10 +123,10 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             <ErrorMessage
                                 name="genre"
                                 component="div"
-                                className="error-message"
+                                className={styles.errorMessage}
                             />
                         </div>
-                        <button type="submit" disabled={isSubmitting}>
+                        <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
                             {isSubmitting ? "Submitting..." : "Submit"}
                         </button>
                     </Form>

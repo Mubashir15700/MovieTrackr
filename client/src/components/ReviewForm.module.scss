@@ -1,0 +1,14 @@
+@import '../styles/elements/inputErrorDisplayer.scss';
+
+.reviewFormContainer {
+    margin: 10px 0;
+
+    .input {
+        width: 100%;
+    }
+
+    .errorMessage {
+        @extend .errorMessage;
+        margin-bottom: 10px;
+    }
+}

@@ -5,7 +5,7 @@ const ConfirmationDialog = {
         title: string = "Are you sure?",
         text: string = "Are you sure you want to proceed?",
         confirmButtonText: string = "Confirm",
-        confirmButtonColor: string = "#3085d6",
+        confirmButtonColor: string = "#007bff",
         cancelButtonText: string = "Cancel",
     ) => {
         return Swal.fire({
@@ -14,7 +14,7 @@ const ConfirmationDialog = {
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor,
-            cancelButtonColor: "#5bc0de",
+            cancelButtonColor: "#6c757d",
             cancelButtonText,
             confirmButtonText,
         });

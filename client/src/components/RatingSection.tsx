@@ -4,6 +4,7 @@ import { editMovie } from "../redux/slices/watchlistSlice";
 import { addUpdateResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
 import { handleApiError } from "../utils/handleApiError";
+import styles from "./RatingSection.module.scss";
 
 interface RatingProps {
     movieId: string;
@@ -42,23 +43,24 @@ const RatingSection: React.FC<RatingProps> = ({ movieId, rating }) => {
     };
 
     return (
-        <div>
-            <p>Rating:</p>
-            {[1, 2, 3, 4, 5].map((index) => (
-                <span
-                    key={index}
-                    style={{
-                        cursor: "pointer",
-                        color:
-                            index <= (hoverRating || rating) ? "gold" : "grey",
-                    }}
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleClick(index)}
-                >
-                    ★
-                </span>
-            ))}
+        <div className={styles.ratingContainer}>
+            <p>Rating:
+                {[1, 2, 3, 4, 5].map((index) => (
+                    <span
+                        key={index}
+                        style={{
+                            cursor: "pointer",
+                            color:
+                                index <= (hoverRating || rating) ? "gold" : "grey",
+                        }}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClick(index)}
+                    >
+                        ★
+                    </span>
+                ))}
+            </p>
         </div>
     );
 };
