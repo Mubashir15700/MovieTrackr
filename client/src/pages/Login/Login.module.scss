@@ -1,0 +1,62 @@
+@import '../../styles/elements/submitButton.scss';
+@import '../../styles/elements/globalErrorDisplay.scss';
+@import '../../styles/elements/inputErrorDisplayer.scss';
+
+.loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    padding: 20px;
+
+    .formContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #fff;
+        padding: 20px;
+        height: auto;
+        min-height: 400px;
+        width: 50%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        @media (max-width: 768px) {
+            width: 60%;
+        }
+
+        @media (max-width: 499px) {
+            width: 100%;
+        }
+
+        .loginForm {
+            width: 60%;
+
+            @media (max-width: 900px) {
+                width: 80%;
+            }
+
+            @media (max-width: 320px) {
+                width: 100%;
+            }
+
+            .formGroup {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 1px;
+            }
+
+            .input {
+                height: 30px;
+                width: 100%;
+                border: none;
+                border-radius: 5px;
+            }
+        }
+    }
+}

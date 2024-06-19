@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { editMovie } from "../redux/slices/watchlistSlice";
-import ReviewForm from "./ReviewForm";
-import { addUpdateResponse } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
-import styles from "./ReviewSection.module.scss"
+import { editMovie } from "../../redux/slices/watchlistSlice";
+import ReviewForm from "../ReviewForm/ReviewForm";
+import { addUpdateResponse } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
+import styles from "./ReviewSection.module.scss";
 
 interface ReviewSectionProps {
     movieId: string;
@@ -18,9 +18,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
 
     const dispatch = useDispatch();
 
-    const { response, error, loading, sendRequest } = useApiRequest<addUpdateResponse>(
-        `/watchlist/movies/${movieId}/review`,
-    );
+    const { response, error, loading, sendRequest } =
+        useApiRequest<addUpdateResponse>(`/watchlist/movies/${movieId}/review`);
 
     const handleReviewSubmit = (review: string) => {
         sendRequest("POST", { movieId, review });
@@ -52,10 +51,11 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
                         <button onClick={() => setShowReviewField(true)}>
                             {review ? "Edit" : "Add"} review
                         </button>
-                        {review?.length && <button onClick={handleDeleteReview}>
-                            {loading ? "Deleting..." : "Delete Review"}
-                        </button>
-                        }
+                        {review?.length && (
+                            <button onClick={handleDeleteReview}>
+                                {loading ? "Deleting..." : "Delete Review"}
+                            </button>
+                        )}
                     </div>
                 )}
             </p>

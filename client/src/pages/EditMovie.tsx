@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import MovieForm from "../components/MovieForm";
+import MovieForm from "../components/MovieForm/MovieForm";
 
 const EditMovie = () => {
     const { id } = useParams<{ id: string }>();

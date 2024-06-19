@@ -1,6 +1,7 @@
-@import '../styles/elements/submitButton.scss';
-@import '../styles/elements/globalErrorDisplay.scss';
-@import '../styles/elements/inputErrorDisplayer.scss';
+@import '../../styles/elements/submitButton.scss';
+@import '../../styles/elements/cancelButton.scss';
+@import '../../styles/elements/globalErrorDisplay.scss';
+@import '../../styles/elements/inputErrorDisplayer.scss';
 
 .movieFormContainer {
     display: flex;

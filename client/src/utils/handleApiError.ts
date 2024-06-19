@@ -21,7 +21,9 @@ export const handleApiError = (logMessage: string, error: any) => {
                     toast.error("Server Error: Please try again later.");
                     break;
                 default:
-                    toast.error("An error occurred: " + error.response.data.message);
+                    toast.error(
+                        "An error occurred: " + error.response.data.message,
+                    );
             }
         } else if (error.request) {
             // Network error or no response

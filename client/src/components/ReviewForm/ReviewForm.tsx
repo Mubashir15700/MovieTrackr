@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { ReviewSchema } from "../utils/validations/reviewSchema";
+import { ReviewSchema } from "../../utils/validations/reviewSchema";
 import styles from "./ReviewForm.module.scss";
 
 interface ReviewFormValues {
@@ -14,7 +14,12 @@ interface ReviewFormProps {
     loading: boolean;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onReviewSubmit, loading }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({
+    review,
+    setShowReviewField,
+    onReviewSubmit,
+    loading,
+}) => {
     const initialValues: ReviewFormValues = {
         review,
     };
@@ -38,14 +43,22 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ review, setShowReviewField, onR
                 {({ isSubmitting }) => (
                     <Form>
                         <div>
-                            <Field as="textarea" name="review" className={styles.input} />
+                            <Field
+                                as="textarea"
+                                name="review"
+                                className={styles.input}
+                            />
                             <ErrorMessage
                                 name="review"
                                 component="div"
                                 className={styles.errorMessage}
                             />
                         </div>
-                        <button type="submit" disabled={isSubmitting} className={styles.reviewSubmitButton}>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className={styles.reviewSubmitButton}
+                        >
                             {loading ? "Submitting..." : "Submit"}
                         </button>
                         <button onClick={() => setShowReviewField(false)}>

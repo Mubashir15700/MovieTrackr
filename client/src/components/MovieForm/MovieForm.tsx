@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovie, editMovie } from "../redux/slices/watchlistSlice";
-import { RootState } from "../redux/rootReducer";
+import { addMovie, editMovie } from "../../redux/slices/watchlistSlice";
+import { RootState } from "../../redux/rootReducer";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { MovieSchema } from "../utils/validations/movieSchema";
-import { addUpdateResponse } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
+import { MovieSchema } from "../../utils/validations/movieSchema";
+import { addUpdateResponse } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
 import styles from "./MovieForm.module.scss";
 
 interface MovieFormValues {
@@ -42,9 +42,8 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
             navigate("/");
         } else if (error) {
             handleApiError(
-                purpose === "add"
-                    ? "Adding"
-                    : "Editing" + "movie failed", error,
+                purpose === "add" ? "Adding" : "Editing" + "movie failed",
+                error,
             );
         }
     }, [response, error, navigate]);
@@ -54,9 +53,10 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
             const method = purpose === "add" ? "POST" : "PUT";
             await sendRequest(method, values);
         } catch (err) {
-            handleApiError(purpose === "add"
-                ? "Adding"
-                : "Editing" + "movie failed", err);
+            handleApiError(
+                purpose === "add" ? "Adding" : "Editing" + "movie failed",
+                err,
+            );
         }
     };
 
@@ -81,10 +81,20 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
             >
                 {({ isSubmitting }) => (
                     <Form className={styles.movieForm}>
-                        <h1>{purpose === "add" ? "Add a New Movie" : "Edit Movie"}</h1>
+                        <h1>
+                            {purpose === "add"
+                                ? "Add a New Movie"
+                                : "Edit Movie"}
+                        </h1>
                         <div className={styles.formGroup}>
-                            <label htmlFor="title" className={styles.label}>Title</label>
-                            <Field type="text" name="title" className={styles.input} />
+                            <label htmlFor="title" className={styles.label}>
+                                Title
+                            </label>
+                            <Field
+                                type="text"
+                                name="title"
+                                className={styles.input}
+                            />
                             <ErrorMessage
                                 name="title"
                                 component="div"
@@ -92,8 +102,17 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             />
                         </div>
                         <div className={styles.formGroup}>
-                            <label htmlFor="description" className={styles.label}>Description</label>
-                            <Field as="textarea" name="description" className={styles.descriptionInput} />
+                            <label
+                                htmlFor="description"
+                                className={styles.label}
+                            >
+                                Description
+                            </label>
+                            <Field
+                                as="textarea"
+                                name="description"
+                                className={styles.descriptionInput}
+                            />
                             <ErrorMessage
                                 name="description"
                                 component="div"
@@ -101,8 +120,17 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             />
                         </div>
                         <div className={styles.formGroup}>
-                            <label htmlFor="releaseYear" className={styles.label}>Release Year</label>
-                            <Field type="text" name="releaseYear" className={styles.input} />
+                            <label
+                                htmlFor="releaseYear"
+                                className={styles.label}
+                            >
+                                Release Year
+                            </label>
+                            <Field
+                                type="text"
+                                name="releaseYear"
+                                className={styles.input}
+                            />
                             <ErrorMessage
                                 name="releaseYear"
                                 component="div"
@@ -110,8 +138,15 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             />
                         </div>
                         <div className={styles.formGroup}>
-                            <label htmlFor="genre" className={styles.label}>Genre</label>
-                            <Field as="select" name="genre" className={styles.genreInput} multiple>
+                            <label htmlFor="genre" className={styles.label}>
+                                Genre
+                            </label>
+                            <Field
+                                as="select"
+                                name="genre"
+                                className={styles.genreInput}
+                                multiple
+                            >
                                 <option value="Action">Action</option>
                                 <option value="Comedy">Comedy</option>
                                 <option value="Drama">Drama</option>
@@ -126,7 +161,17 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                                 className={styles.errorMessage}
                             />
                         </div>
-                        <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
+                        <button
+                            className={styles.cancelButton}
+                            onClick={() => navigate(-1)}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className={styles.submitButton}
+                        >
                             {isSubmitting ? "Submitting..." : "Submit"}
                         </button>
                     </Form>

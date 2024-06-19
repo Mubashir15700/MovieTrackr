@@ -118,7 +118,7 @@ export const {
     rateMovie,
     reviewMovie,
     deleteReview,
-    clearWatchlist
+    clearWatchlist,
 } = watchlistSlice.actions;
 
 export default watchlistSlice.reducer;

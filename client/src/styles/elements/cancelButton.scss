@@ -1,0 +1,14 @@
+.cancelButton {
+    width: 100px;
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    background-color: darkgray;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px 10px 10px 0;
+}
+
+.cancelButton:hover {
+    background-color: lightgray;
+}

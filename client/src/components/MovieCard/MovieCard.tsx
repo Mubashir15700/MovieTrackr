@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteMovie } from "../redux/slices/watchlistSlice";
-import CustomTooltip from "./CustomToolTip";
-import ConfirmationDialog from "./ConfirmationDialog";
-import MovieWatchStatusSelect from "./MovieWatchStatusSelect";
-import ReviewSection from "./ReviewSection";
-import RatingSection from "./RatingSection";
-import { Movie, statusStringResponse } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
+import { deleteMovie } from "../../redux/slices/watchlistSlice";
+import CustomTooltip from "../CustomToolTip";
+import ConfirmationDialog from "../ConfirmationDialog";
+import MovieWatchStatusSelect from "../MovieWatchStatusSelect";
+import ReviewSection from "../ReviewSection/ReviewSection";
+import RatingSection from "../RatingSection/RatingSection";
+import { Movie, statusStringResponse } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
 import { FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import styles from "./MovieCard.module.scss";
@@ -17,9 +17,10 @@ import styles from "./MovieCard.module.scss";
 const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
     const dispatch = useDispatch();
 
-    const { response, error, sendRequest } = useApiRequest<statusStringResponse>(
-        `/watchlist/movies/${movie.movieId}`,
-    );
+    const { response, error, sendRequest } =
+        useApiRequest<statusStringResponse>(
+            `/watchlist/movies/${movie.movieId}`,
+        );
 
     const handleRemoveMovie = async () => {
         const result = await ConfirmationDialog.confirmAction(
@@ -54,10 +55,16 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
             <div className={styles.movieCardHead}>
                 <h5 className={styles.movieTitle}>
                     {movie.title}
-                    <span className={styles.movieYear}>({movie.releaseYear})</span>
+                    <span className={styles.movieYear}>
+                        ({movie.releaseYear})
+                    </span>
                 </h5>
-                <div>
-                    <Link to={`/edit-movie/${movie.movieId}`} className={styles.movieEditButton} id="editMovieIcon">
+                <div className={styles.buttonsContainer}>
+                    <Link
+                        to={`/edit-movie/${movie.movieId}`}
+                        className={styles.movieEditButton}
+                        id="editMovieIcon"
+                    >
                         <FaPen />
                     </Link>
                     <CustomTooltip
@@ -66,7 +73,11 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
                         place="bottom"
                         content="Edit this movie"
                     />
-                    <button className={styles.movieDeleteButton} id="deleteMovieIcon" onClick={handleRemoveMovie}>
+                    <button
+                        className={styles.movieDeleteButton}
+                        id="deleteMovieIcon"
+                        onClick={handleRemoveMovie}
+                    >
                         <MdDelete />
                     </button>
                     <CustomTooltip

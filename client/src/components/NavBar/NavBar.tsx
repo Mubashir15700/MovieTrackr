@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../redux/slices/authSlice";
-import { clearWatchlist } from "../redux/slices/watchlistSlice";
-import CustomTooltip from "./CustomToolTip";
-import ConfirmationDialog from "./ConfirmationDialog";
-import { statusStringResponse } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
-import { FaSignOutAlt, FaPlus, FaCaretSquareDown, FaCaretSquareUp } from 'react-icons/fa';
+import { logout } from "../../redux/slices/authSlice";
+import { clearWatchlist } from "../../redux/slices/watchlistSlice";
+import CustomTooltip from "../CustomToolTip";
+import ConfirmationDialog from "../ConfirmationDialog";
+import { statusStringResponse } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
+import {
+    FaSignOutAlt,
+    FaPlus,
+    FaCaretSquareDown,
+    FaCaretSquareUp,
+} from "react-icons/fa";
 import styles from "./NavBar.module.scss";
 
 const NavBar = () => {
@@ -69,7 +74,10 @@ const NavBar = () => {
                     place="bottom"
                     content="Add new movie"
                 />
-                <button className={`${styles.logoutButton} logoutIcon`} onClick={handleLogout}>
+                <button
+                    className={`${styles.logoutButton} logoutIcon`}
+                    onClick={handleLogout}
+                >
                     <FaSignOutAlt />
                 </button>
                 <CustomTooltip
@@ -81,16 +89,26 @@ const NavBar = () => {
             </div>
             <div className={styles.dropdownMenuWrapper}>
                 <div className={styles.menuIcon} onClick={toggleDropdown}>
-                    {isDropdownOpen ? <FaCaretSquareUp /> : <FaCaretSquareDown />}
+                    {isDropdownOpen ? (
+                        <FaCaretSquareUp />
+                    ) : (
+                        <FaCaretSquareDown />
+                    )}
                 </div>
                 {isDropdownOpen && (
                     <div className={styles.dropdownMenu}>
                         <Link to="/add-movie">
-                            <button className={`${styles.addMovieLink} addMovieIcon`} onClick={toggleDropdown}>
+                            <button
+                                className={`${styles.addMovieLink} addMovieIcon`}
+                                onClick={toggleDropdown}
+                            >
                                 <FaPlus />
                             </button>
                         </Link>
-                        <button className={`${styles.logoutButton} logoutIcon`} onClick={handleLogout}>
+                        <button
+                            className={`${styles.logoutButton} logoutIcon`}
+                            onClick={handleLogout}
+                        >
                             <FaSignOutAlt />
                         </button>
                     </div>

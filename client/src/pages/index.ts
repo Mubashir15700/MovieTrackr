@@ -1,8 +1,8 @@
-import Login from "./Login";
-import SignUp from "./SignUp";
-import Dashboard from "./Dashboard";
+import Login from "./Login/Login";
+import SignUp from "./SignUp/SignUp";
+import Dashboard from "./Dashboard/Dashboard";
 import AddMovie from "./AddMovie";
 import EditMovie from "./EditMovie";
-import NotFound from "./NotFound";
+import NotFound from "./NotFound/NotFound";
 
 export { Login, SignUp, Dashboard, AddMovie, EditMovie, NotFound };

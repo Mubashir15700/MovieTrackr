@@ -5,13 +5,13 @@ h4 {
 .movieCardContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr); // Default to 3 columns
-    gap: 20px; // Adjust gap as needed
+    gap: 15px; // Adjust gap as needed
 
     @media (max-width: 992px) {
         grid-template-columns: repeat(2, 1fr); // 2 columns for medium screens
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 768px) {
         grid-template-columns: 1fr; // 1 column for small screens
     }
 }

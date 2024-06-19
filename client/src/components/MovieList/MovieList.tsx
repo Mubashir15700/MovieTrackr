@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/rootReducer";
+import { RootState } from "../../redux/rootReducer";
 import {
     fetchWatchlistStart,
     fetchWatchlistSuccess,
     fetchWatchlistFailure,
-} from "../redux/slices/watchlistSlice";
-import MovieCard from "./MovieCard";
-import { Movie } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
+} from "../../redux/slices/watchlistSlice";
+import MovieCard from "../MovieCard/MovieCard";
+import { Movie } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
 import styles from "./MovieList.module.scss";
 
 interface WatchlistResponse {

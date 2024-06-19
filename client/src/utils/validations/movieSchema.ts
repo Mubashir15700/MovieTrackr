@@ -4,7 +4,7 @@ export const MovieSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     description: Yup.string()
         .required("Description is required")
-        .max(100, 'Description must be at most 100 characters'),
+        .max(100, "Description must be at most 100 characters"),
     releaseYear: Yup.number()
         .typeError("Release year must be numeric")
         .required("Release year is required")

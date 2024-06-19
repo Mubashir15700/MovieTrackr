@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editMovie } from "../redux/slices/watchlistSlice";
-import { addUpdateResponse } from "../interfaces/Movie";
-import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
+import { editMovie } from "../../redux/slices/watchlistSlice";
+import { addUpdateResponse } from "../../interfaces/Movie";
+import useApiRequest from "../../hooks/useApiRequest";
+import { handleApiError } from "../../utils/handleApiError";
 import styles from "./RatingSection.module.scss";
 
 interface RatingProps {
@@ -44,14 +44,17 @@ const RatingSection: React.FC<RatingProps> = ({ movieId, rating }) => {
 
     return (
         <div className={styles.ratingContainer}>
-            <p>Rating:
+            <p>
+                Rating:
                 {[1, 2, 3, 4, 5].map((index) => (
                     <span
                         key={index}
                         style={{
                             cursor: "pointer",
                             color:
-                                index <= (hoverRating || rating) ? "gold" : "grey",
+                                index <= (hoverRating || rating)
+                                    ? "gold"
+                                    : "grey",
                         }}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
