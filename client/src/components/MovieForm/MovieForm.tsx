@@ -7,7 +7,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { MovieSchema } from "../../utils/validations/movieSchema";
 import { addUpdateResponse } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import styles from "./MovieForm.module.scss";
 
 interface MovieFormValues {
@@ -27,7 +26,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
     const endPoint =
         purpose === "add" ? "/watchlist/movies/add" : `/watchlist/movies/${id}`;
 
-    const { response, error, sendRequest } =
+    const { response, sendRequest } =
         useApiRequest<addUpdateResponse>(endPoint);
 
     const navigate = useNavigate();
@@ -40,24 +39,12 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                 ? dispatch(addMovie(movie))
                 : dispatch(editMovie(movie));
             navigate("/");
-        } else if (error) {
-            handleApiError(
-                purpose === "add" ? "Adding" : "Editing" + "movie failed",
-                error,
-            );
         }
-    }, [response, error, navigate]);
+    }, [response, navigate]);
 
     const handleSubmit = async (values: MovieFormValues) => {
-        try {
-            const method = purpose === "add" ? "POST" : "PUT";
-            await sendRequest(method, values);
-        } catch (err) {
-            handleApiError(
-                purpose === "add" ? "Adding" : "Editing" + "movie failed",
-                err,
-            );
-        }
+        const method = purpose === "add" ? "POST" : "PUT";
+        await sendRequest(method, values);
     };
 
     const movieToEdit = useSelector((state: RootState) =>

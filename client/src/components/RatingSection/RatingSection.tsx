@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { editMovie } from "../../redux/slices/watchlistSlice";
 import { addUpdateResponse } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import styles from "./RatingSection.module.scss";
 
 interface RatingProps {
@@ -16,7 +15,7 @@ const RatingSection: React.FC<RatingProps> = ({ movieId, rating }) => {
 
     const dispatch = useDispatch();
 
-    const { response, error, sendRequest } = useApiRequest<addUpdateResponse>(
+    const { response, sendRequest } = useApiRequest<addUpdateResponse>(
         `/watchlist/movies/${movieId}/rate`,
     );
 
@@ -24,11 +23,7 @@ const RatingSection: React.FC<RatingProps> = ({ movieId, rating }) => {
         if (response && response.status === "success") {
             dispatch(editMovie(response?.data?.movie));
         }
-
-        if (error) {
-            handleApiError("Error rating movie", error);
-        }
-    }, [response, error, dispatch]);
+    }, [response, dispatch]);
 
     const handleMouseEnter = (index: number) => {
         setHoverRating(index);
@@ -39,7 +34,7 @@ const RatingSection: React.FC<RatingProps> = ({ movieId, rating }) => {
     };
 
     const handleClick = (index: number) => {
-        sendRequest("POST", { movieId, rating: index + 1 });
+        sendRequest("POST", { movieId, rating: index });
     };
 
     return (

@@ -9,7 +9,6 @@ import {
 import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import styles from "./MovieList.module.scss";
 
 interface WatchlistResponse {
@@ -33,7 +32,6 @@ const MovieList = () => {
                 dispatch(fetchWatchlistStart());
                 await sendRequest("GET");
             } catch (err: any) {
-                handleApiError("Failed to fetch movies", err);
                 dispatch(fetchWatchlistFailure(err.message));
             }
         };
@@ -47,7 +45,6 @@ const MovieList = () => {
         }
 
         if (error) {
-            handleApiError("Error fetching movies", error);
             dispatch(fetchWatchlistFailure(error.message));
         }
     }, [response, error, dispatch]);

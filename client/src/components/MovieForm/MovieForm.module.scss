@@ -2,6 +2,7 @@
 @import '../../styles/elements/cancelButton.scss';
 @import '../../styles/elements/globalErrorDisplay.scss';
 @import '../../styles/elements/inputErrorDisplayer.scss';
+@import "../../styles/variables";
 
 .movieFormContainer {
     display: flex;
@@ -12,7 +13,7 @@
 
     .movieForm {
         width: 50%;
-        border: 1px solid #fff;
+        border: $border;
         border-radius: 5px;
         padding: 20px;
 

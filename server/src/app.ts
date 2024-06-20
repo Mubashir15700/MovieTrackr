@@ -11,6 +11,7 @@ import corsOptions from "./configs/corsOptions.js";
 import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import AppError from "./utils/AppError.js";
 
 checkEnvVariables();
 
@@ -30,6 +31,11 @@ app.use("/api/watchlist", watchlistRoutes);
 
 app.get("/test", (req, res) => {
     res.send("Hello World!");
+});
+
+// 404 handler
+app.use((req, res, next) => {
+    next(new AppError(`${req.originalUrl}`, 404));
 });
 
 // Global error handling middleware

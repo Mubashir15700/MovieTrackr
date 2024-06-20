@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { updateWatchStatus } from "../redux/slices/watchlistSlice";
 import { statusStringResponse } from "../interfaces/Movie";
 import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
 
 interface MovieWatchStatusSelectProps {
     movieId: string;
@@ -16,7 +15,7 @@ const MovieWatchStatusSelect: React.FC<MovieWatchStatusSelectProps> = ({
 }) => {
     const dispatch = useDispatch();
 
-    const { response, error, sendRequest } =
+    const { response, sendRequest } =
         useApiRequest<statusStringResponse>(
             `/watchlist/movies/${movieId}/updateWatchedStatus`,
         );
@@ -25,11 +24,7 @@ const MovieWatchStatusSelect: React.FC<MovieWatchStatusSelectProps> = ({
         if (response && response.status === "success") {
             dispatch(updateWatchStatus({ movieId, isWatched: !isWatched }));
         }
-
-        if (error) {
-            handleApiError("Error updating watch status", error);
-        }
-    }, [response, error, dispatch]);
+    }, [response, dispatch]);
 
     const handleChange = () => {
         sendRequest("PATCH", { movieId, isWatched: !isWatched });

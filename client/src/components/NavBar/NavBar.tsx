@@ -7,7 +7,6 @@ import CustomTooltip from "../CustomToolTip";
 import ConfirmationDialog from "../ConfirmationDialog";
 import { statusStringResponse } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import {
     FaSignOutAlt,
     FaPlus,
@@ -23,7 +22,7 @@ const NavBar = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const { response, error, sendRequest } =
+    const { response, sendRequest } =
         useApiRequest<statusStringResponse>("/auth/logout");
 
     const navigate = useNavigate();
@@ -34,10 +33,8 @@ const NavBar = () => {
             dispatch(logout());
             dispatch(clearWatchlist());
             navigate("/login");
-        } else if (error) {
-            handleApiError("Failed to logout", error);
         }
-    }, [response, , error, navigate]);
+    }, [response, navigate]);
 
     const handleLogout = async () => {
         const result = await ConfirmationDialog.confirmAction(
@@ -49,11 +46,7 @@ const NavBar = () => {
         );
 
         if (result.isConfirmed) {
-            try {
-                await sendRequest("GET");
-            } catch (err) {
-                handleApiError("Logout failed. Please try again", err);
-            }
+            await sendRequest("GET");
         }
     };
 

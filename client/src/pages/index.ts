@@ -1,5 +1,5 @@
-import Login from "./Login/Login";
-import SignUp from "./SignUp/SignUp";
+import Login from "./Auth/Login";
+import SignUp from "./Auth/SignUp";
 import Dashboard from "./Dashboard/Dashboard";
 import AddMovie from "./AddMovie";
 import EditMovie from "./EditMovie";

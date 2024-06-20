@@ -14,7 +14,7 @@ export const checkAuthHandler = catchAsync(
 
         if (!token) {
             throw new AppError(
-                "Unauthorized. Please log in.",
+                "Please log in.",
                 HttpStatusCode.UNAUTHORIZED,
             );
         }
@@ -114,7 +114,7 @@ export const loginHandler = catchAsync(
             password,
             foundUser.password,
         );
-
+        
         if (!isPasswordValid) {
             throw new AppError(
                 "Invalid credentials",

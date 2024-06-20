@@ -1,38 +1,39 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export const handleApiError = (logMessage: string, error: any) => {
-    console.error(`${logMessage}:`, error);
+export const handleApiError = (error: any) => {
+    console.error(`API Err handler: `, error);
 
+    let errorPrefix = "An unexpected error occurred";
     if (axios.isAxiosError(error)) {
         if (error.response) {
             // Client or Server error response
             switch (error.response.status) {
                 case 400:
-                    toast.error("Bad Request: " + error.response.data.message);
+                    errorPrefix = "Bad Request";
                     break;
                 case 401:
-                    toast.error("Unauthorized: Please log in.");
+                    errorPrefix = "Unauthorized";
                     break;
                 case 404:
-                    toast.error("Not Found: " + error.response.data.message);
+                    errorPrefix = "Not Found";
                     break;
                 case 500:
-                    toast.error("Server Error: Please try again later.");
+                    errorPrefix = "Internal Server Error";
                     break;
                 default:
-                    toast.error(
-                        "An error occurred: " + error.response.data.message,
-                    );
+                    errorPrefix = "An error occurred";
             }
+
+            toast.error(`${errorPrefix}: ${error.response.data.message}`);
         } else if (error.request) {
             // Network error or no response
-            toast.error("Network Error: Please check your connection.");
+            toast.error(`${error.message}: Connection refused`);
         } else {
             // Other unexpected errors
-            toast.error("An unexpected error occurred: " + error.message);
+            toast.error(`${errorPrefix}: ${error.message}`);
         }
     } else {
-        toast.error("An unexpected error occurred: " + error.message);
+        toast.error(`${errorPrefix}: ${error.message}`);
     }
 };

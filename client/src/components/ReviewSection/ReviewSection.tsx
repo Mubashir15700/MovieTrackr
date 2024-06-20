@@ -4,7 +4,6 @@ import { editMovie } from "../../redux/slices/watchlistSlice";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import { addUpdateResponse } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import styles from "./ReviewSection.module.scss";
 
 interface ReviewSectionProps {
@@ -18,7 +17,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
 
     const dispatch = useDispatch();
 
-    const { response, error, loading, sendRequest } =
+    const { response, loading, sendRequest } =
         useApiRequest<addUpdateResponse>(`/watchlist/movies/${movieId}/review`);
 
     const handleReviewSubmit = (review: string) => {
@@ -34,12 +33,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ movieId, review }) => {
             dispatch(editMovie(response?.data?.movie));
         }
 
-        if (error) {
-            handleApiError("Error reviewing movie", error);
-        }
-
         setShowReviewField(false);
-    }, [response, error, dispatch]);
+    }, [response, dispatch]);
 
     return (
         <div className={styles.reviewContainer}>

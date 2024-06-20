@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../config/axiosConfig";
 import { AxiosError } from "axios";
+import { handleApiError } from "../utils/handleApiError";
 
 interface UseApiRequestResponse<T> {
     response: T | null;
@@ -35,17 +36,19 @@ const useApiRequest = <T>(url: string): UseApiRequestResponse<T> => {
 
             console.log("API Call Response: ", res);
         } catch (err: any) {
-            console.log("API Call Error: ", err);
-
             if (err.isAxiosError) {
                 setError(err);
+                handleApiError(err);
             } else {
-                setError({
+                const customError = {
                     ...err,
                     isAxiosError: false,
                     name: "AxiosError",
                     message: "An unknown error occurred",
-                });
+                };
+
+                setError(customError);
+                handleApiError(customError);
             }
         } finally {
             setLoading(false);

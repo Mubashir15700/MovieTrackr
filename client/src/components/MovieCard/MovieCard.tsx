@@ -9,7 +9,6 @@ import ReviewSection from "../ReviewSection/ReviewSection";
 import RatingSection from "../RatingSection/RatingSection";
 import { Movie, statusStringResponse } from "../../interfaces/Movie";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
 import { FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import styles from "./MovieCard.module.scss";
@@ -17,7 +16,7 @@ import styles from "./MovieCard.module.scss";
 const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
     const dispatch = useDispatch();
 
-    const { response, error, sendRequest } =
+    const { response, sendRequest } =
         useApiRequest<statusStringResponse>(
             `/watchlist/movies/${movie.movieId}`,
         );
@@ -32,11 +31,7 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
         );
 
         if (result.isConfirmed) {
-            try {
-                await sendRequest("DELETE");
-            } catch (err) {
-                handleApiError("Removing movie failed", err);
-            }
+            await sendRequest("DELETE");
         }
     };
 
@@ -44,11 +39,7 @@ const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
         if (response && response.status === "success") {
             dispatch(deleteMovie(movie.movieId));
         }
-
-        if (error) {
-            handleApiError("Removing movie failed", error);
-        }
-    }, [response, error, dispatch]);
+    }, [response, dispatch]);
 
     return (
         <div className={styles.movieCard}>

@@ -16,21 +16,16 @@ import {
 } from "../pages/index";
 import { AuthResponse } from "../interfaces/AuthResponse";
 import useApiRequest from "../hooks/useApiRequest";
-import { handleApiError } from "../utils/handleApiError";
 
 const AppRoutes = () => {
-    const { response, error, loading, sendRequest } =
+    const { response, loading, sendRequest } =
         useApiRequest<AuthResponse>("/auth/checkauth");
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         const checkauth = async () => {
-            try {
-                await sendRequest("GET");
-            } catch (err) {
-                handleApiError("Check authentication error", err);
-            }
+            await sendRequest("GET");
         };
 
         checkauth();
@@ -46,10 +41,7 @@ const AppRoutes = () => {
             dispatch(loginSuccess({ user }));
         }
 
-        if (error) {
-            handleApiError("Checking authentication failed", error);
-        }
-    }, [response, error, dispatch]);
+    }, [response, dispatch]);
 
     if (loading) {
         return <Loading />;

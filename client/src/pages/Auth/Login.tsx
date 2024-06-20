@@ -1,17 +1,16 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slices/authSlice";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { SignupSchema } from "../../utils/validations/signUpSchema";
+import { LoginSchema } from "../../utils/validations/loginSchema";
 import { AuthResponse } from "../../interfaces/AuthResponse";
 import useApiRequest from "../../hooks/useApiRequest";
-import { handleApiError } from "../../utils/handleApiError";
-import styles from "./SignUp.module.scss";
+import styles from "./AuthPage.module.scss";
 
-const SignUp = () => {
+const Login = () => {
     const { response, error, loading, sendRequest } =
-        useApiRequest<AuthResponse>("/auth/signup");
+        useApiRequest<AuthResponse>("/auth/login");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -26,55 +25,27 @@ const SignUp = () => {
 
             dispatch(loginSuccess({ user }));
             navigate("/");
-        } else if (error) {
-            handleApiError("Signup error", error);
         }
-    }, [response, error, navigate]);
+    }, [response, navigate]);
 
     const handleSubmit = async (values: {
-        name: string;
         email: string;
         password: string;
-        confirmPassword: string;
     }) => {
-        try {
-            await sendRequest("POST", values);
-        } catch (err) {
-            handleApiError("Signup error", err);
-        }
+        await sendRequest("POST", values);
     };
 
     return (
-        <div className={styles.signUpContainer}>
+        <div className={styles.authPageContainer}>
             <Formik
-                initialValues={{
-                    name: "",
-                    email: "",
-                    password: "",
-                    confirmPassword: "",
-                }}
-                validationSchema={SignupSchema}
+                initialValues={{ email: "", password: "" }}
+                validationSchema={LoginSchema}
                 onSubmit={handleSubmit}
             >
                 {({ isSubmitting }) => (
                     <div className={styles.formContainer}>
-                        <h1>Sign Up</h1>
-                        <Form className={styles.signupForm}>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="name" className={styles.label}>
-                                    Name
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="name"
-                                    className={styles.input}
-                                />
-                                <ErrorMessage
-                                    className={styles.errorMessage}
-                                    name="name"
-                                    component="div"
-                                />
-                            </div>
+                        <h1>Log in</h1>
+                        <Form className={styles.authForm}>
                             <div className={styles.formGroup}>
                                 <label htmlFor="email" className={styles.label}>
                                     Email
@@ -108,34 +79,16 @@ const SignUp = () => {
                                     component="div"
                                 />
                             </div>
-                            <div className={styles.formGroup}>
-                                <label
-                                    htmlFor="confirmPassword"
-                                    className={styles.label}
-                                >
-                                    Confirm Password
-                                </label>
-                                <Field
-                                    type="password"
-                                    name="confirmPassword"
-                                    className={styles.input}
-                                />
-                                <ErrorMessage
-                                    className={styles.errorMessage}
-                                    name="confirmPassword"
-                                    component="div"
-                                />
-                            </div>
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
                                 className={styles.submitButton}
                             >
-                                {loading ? "Signing up..." : "Signup"}
+                                {loading ? "Loging in..." : "Login"}
                             </button>
                             <p>
-                                Already have an acount?
-                                <Link to={"/login"}>Login</Link>
+                                Don't have an acount?
+                                <Link to={"/signup"}>Signup</Link>
                             </p>
                             {error && (
                                 <div className={styles.globalErrorMessage}>
@@ -150,4 +103,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;

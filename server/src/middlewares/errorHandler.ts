@@ -20,7 +20,7 @@ const errorHandler = (
     } else {
         // Default to 500 Internal Server Error for non-AppError errors
         statusCode = 500;
-        message = err.message || "Internal Server Error";
+        message = "Please try again later";
     }
 
     logger.error(`Error: ${message}, Status Code: ${statusCode}`);
