@@ -54,6 +54,7 @@ const Login = () => {
                                     type="email"
                                     name="email"
                                     className={styles.input}
+                                    id="email"
                                 />
                                 <ErrorMessage
                                     className={styles.errorMessage}
@@ -72,6 +73,7 @@ const Login = () => {
                                     type="password"
                                     name="password"
                                     className={styles.input}
+                                    id="password"
                                 />
                                 <ErrorMessage
                                     className={styles.errorMessage}
@@ -83,6 +85,7 @@ const Login = () => {
                                 type="submit"
                                 disabled={isSubmitting}
                                 className={styles.submitButton}
+                                role="button"
                             >
                                 {loading ? "Loging in..." : "Login"}
                             </button>
