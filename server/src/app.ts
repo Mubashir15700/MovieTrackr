@@ -1,17 +1,20 @@
 import express from "express";
+import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import {
     morganMiddleware,
     morganWinstonMiddleware,
-} from "./middlewares/logging.js";
-import checkEnvVariables from "./utils/checkENVs.js";
-import corsOptions from "./configs/corsOptions.js";
-import authRoutes from "./routes/authRoutes.js";
-import watchlistRoutes from "./routes/watchlistRoutes.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import AppError from "./utils/AppError.js";
+} from "./middlewares/logging";
+import checkEnvVariables from "./utils/checkENVs";
+import corsOptions from "./configs/corsOptions";
+import authRoutes from "./routes/authRoutes";
+import watchlistRoutes from "./routes/watchlistRoutes";
+import errorHandler from "./middlewares/errorHandler";
+import AppError from "./utils/AppError";
+
+dotenv.config();
 
 checkEnvVariables();
 

@@ -4,9 +4,9 @@ import {
     signupHandler,
     loginHandler,
     logoutHandler,
-} from "../controllers/authController.js";
-import { validateSignup } from "../middlewares/validations/signUpValidation.js";
-import { validateLogin } from "../middlewares/validations/loginValidation.js";
+} from "../controllers/authController";
+import { validateSignup } from "../middlewares/validations/signUpValidation";
+import { validateLogin } from "../middlewares/validations/loginValidation";
 
 const router = Router();
 

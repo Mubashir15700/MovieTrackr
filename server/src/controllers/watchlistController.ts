@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { v4 as uuidv4 } from "uuid";
-import Watchlist from "../models/watchlistModel.js";
-import AppError from "../utils/AppError.js";
-import catchAsync from "../utils/catchAsync.js";
-import { HttpStatusCode } from "../constants/httpStatusCodes.js";
+import Watchlist from "../models/watchlistModel";
+import AppError from "../utils/AppError";
+import catchAsync from "../utils/catchAsync";
+import { HttpStatusCode } from "../constants/httpStatusCodes";
 
 export const getMoviesHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {

@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import User from "../models/userModel.js";
-import setCookie from "../utils/setCookie.js";
-import generateToken from "../utils/generateToken.js";
-import AppError from "../utils/AppError.js";
-import catchAsync from "../utils/catchAsync.js";
-import { HttpStatusCode } from "../constants/httpStatusCodes.js";
+import User from "../models/userModel";
+import setCookie from "../utils/setCookie";
+import generateToken from "../utils/generateToken";
+import AppError from "../utils/AppError";
+import catchAsync from "../utils/catchAsync";
+import { HttpStatusCode } from "../constants/httpStatusCodes";
 
 export const checkAuthHandler = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {

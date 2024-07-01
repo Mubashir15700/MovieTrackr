@@ -4,14 +4,17 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import morgan from "morgan";
-import logger from "../utils/logger.js";
+import logger from "../utils/logger";
 
-// Get the current file's path and convert it to a directory path
-const currentFilePath = fileURLToPath(import.meta.url);
-const currentDirPath = dirname(currentFilePath);
+// Get the current file's absolute path and directory path
+const logFilePath = (function() {
+    const path = require('path');
+    return path.resolve(path.dirname(''));
+})();
+const logDirPath = dirname(logFilePath);
 
 // Navigate back two levels and then enter the "logs" directory
-const logsDirPath = join(currentDirPath, "../../logs");
+const logsDirPath = join(logDirPath, '../../logs');
 
 // Create a write stream (in append mode) for HTTP logs
 const accessLogStream = fs.createWriteStream(

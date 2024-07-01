@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import logger from "../utils/logger.js";
-import AppError from "../utils/AppError.js";
-import { HttpStatusCode } from "../constants/httpStatusCodes.js";
+import logger from "../utils/logger";
+import AppError from "../utils/AppError";
+import { HttpStatusCode } from "../constants/httpStatusCodes";
 
 let isConnected = false; // Flag to track connection status
 

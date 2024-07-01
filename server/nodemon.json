@@ -6,6 +6,6 @@
     "ignore": [
         "tests/**/*.test.ts"
     ],
-    "exec": "node --env-file=.env --loader ts-node/esm src/server.ts",
+    "exec": "nodemon --watch ./src --ext ts,json --exec \"tsc && node dist/server.js\"",
     "delay": "1000"
 }

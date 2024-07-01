@@ -8,10 +8,10 @@ import {
     rateMovieHandler,
     reviewMovieHandler,
     deleteReviewHandler,
-} from "../controllers/watchlistController.js";
-import { checkAuthStatus } from "../middlewares/checkAuth.js";
-import { validateMovie } from "../middlewares/validations/movieValidation.js";
-import { validateReview } from "../middlewares/validations/reviewValidation.js";
+} from "../controllers/watchlistController";
+import { checkAuthStatus } from "../middlewares/checkAuth";
+import { validateMovie } from "../middlewares/validations/movieValidation";
+import { validateReview } from "../middlewares/validations/reviewValidation";
 
 const router = Router();
 

@@ -4,12 +4,15 @@ import { dirname, join } from "path";
 import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
-// Get the current file's path and convert it to a directory path
-const currentFilePath = fileURLToPath(import.meta.url);
-const currentDirPath = dirname(currentFilePath);
+// Get the current file's absolute path and directory path
+const logFilePath = (function() {
+    const path = require('path');
+    return path.resolve(path.dirname(''));
+})();
+const logDirPath = dirname(logFilePath);
 
 // Navigate back two levels and then enter the "logs" directory
-const logsDirPath = join(currentDirPath, "../../logs");
+const logsDirPath = join(logDirPath, '../../logs');
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(logsDirPath)) {
