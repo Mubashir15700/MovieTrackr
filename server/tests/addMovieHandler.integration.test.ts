@@ -2,7 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 import app from "../src/app";
 import { v4 as uuidv4 } from "uuid";
-import Watchlist, { WatchlistDocument } from "../src/models/watchlistModel";
+import Watchlist from "../src/models/watchlistModel";
 import { HttpStatusCode } from "../src/constants/httpStatusCodes";
 
 describe("addMovieHandler Test", () => {
@@ -14,6 +14,8 @@ describe("addMovieHandler Test", () => {
             releaseYear: 2023,
             genre: ["Action"],
             isWatched: false,
+            rating: 0,
+            review: "",
         };
 
         // Mock user ID
@@ -23,11 +25,12 @@ describe("addMovieHandler Test", () => {
         jest.spyOn(Watchlist, "findOne").mockResolvedValueOnce(null);
 
         // Mock Watchlist.create to return a new watchlist with the movie added
-        const mockCreatedWatchlist = {
+        const mockCreatedWatchlist = new Watchlist({
             user: mockUserId,
             movies: [{ movieId: uuidv4(), ...mockMovieData }],
-        } as WatchlistDocument;
-        jest.spyOn(Watchlist, "create").mockResolvedValueOnce(mockCreatedWatchlist);
+        });
+
+        jest.spyOn(Watchlist, "create").mockResolvedValueOnce([mockCreatedWatchlist]);
 
         // Simulate mock authentication token stored in cookie
         const mockToken = 'mock_token_value';
@@ -37,7 +40,6 @@ describe("addMovieHandler Test", () => {
             .post("/api/watchlist/movies/add")
             .send(mockMovieData)
             .set("Cookie", `jwt_token=${mockToken}`); // Set the cookie with the JWT token
-
 
         // Assertions
         expect(response.status).toBe(HttpStatusCode.CREATED);
