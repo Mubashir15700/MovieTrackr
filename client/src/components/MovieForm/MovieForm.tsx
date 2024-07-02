@@ -80,6 +80,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             <Field
                                 type="text"
                                 name="title"
+                                id="title"
                                 className={styles.input}
                             />
                             <ErrorMessage
@@ -98,6 +99,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             <Field
                                 as="textarea"
                                 name="description"
+                                id="description"
                                 className={styles.descriptionInput}
                             />
                             <ErrorMessage
@@ -116,6 +118,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             <Field
                                 type="text"
                                 name="releaseYear"
+                                id="releaseYear"
                                 className={styles.input}
                             />
                             <ErrorMessage
@@ -131,6 +134,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ purpose, id }) => {
                             <Field
                                 as="select"
                                 name="genre"
+                                id="genre"
                                 className={styles.genreInput}
                                 multiple
                             >
