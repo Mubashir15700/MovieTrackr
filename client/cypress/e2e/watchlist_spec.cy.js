@@ -17,20 +17,12 @@ describe('Movie Watchlist App', () => {
     });
   });
 
-  it('should find the "add movie" button and navigate to the add movie page', () => {
+  it('should add a new movie', () => {
     // Find the button with ID "addMovieIcon" and click it
     cy.get('#addMovieIcon button', { timeout: 10000 }).should('be.visible').click();
 
     // Assert that the URL includes "/add-movie"
     cy.url({ timeout: 10000 }).should('include', '/add-movie');
-  });
-
-  it('should add a new movie', () => {
-    // Navigate to "/" route
-    cy.visit('/');
-
-    // Find the button with ID "addMovieIcon" and click it
-    cy.get('#addMovieIcon button', { timeout: 10000 }).should('be.visible').click();
 
     // Fill out the form
     cy.get('input#title', { timeout: 10000 }).should('be.visible').type('New Movie');
@@ -46,33 +38,7 @@ describe('Movie Watchlist App', () => {
     cy.contains('New Movie').should('be.visible');
   });
 
-  it('should delete a movie', () => {
-    // Navigate to "/" route
-    cy.visit('/');
-
-    let movieId;
-
-    // Intercept the DELETE request to handle it in Cypress
-    cy.intercept('DELETE', `/watchlist/movies/${movieId}`).as('deleteMovie');
-
-    // Perform action that triggers deletion (clicking delete button)
-    // Replace with actual selector if different in your application
-    cy.get('#deleteMovieIcon').click();
-
-    // Confirm the deletion in the SweetAlert dialog
-    cy.get('.swal2-confirm').click();
-
-    // Wait for the API request to complete
-    // cy.wait('@deleteMovie').then((interception) => {
-    //   // Check the request status and other details if necessary
-    //   expect(interception.response.statusCode).to.eq(200);
-
-    //   // Optionally, assert that the movie is removed from UI if needed
-    //   cy.contains('.movieTitle', 'Deleted Movie').should('not.exist');
-    // });
-  });
-
-  it('should click the first movie\'s edit button', () => {
+  it('should click the first movie\'s edit button and edit the movie', () => {
     // Navigate to "/" route
     cy.visit('/');
 
@@ -96,9 +62,29 @@ describe('Movie Watchlist App', () => {
     cy.contains('Edited Movie Title').should('be.visible');
   });
 
+  it('should delete a movie', () => {
+    // Navigate to "/" route
+    cy.visit('/');
+
+    let movieId;
+
+    // Intercept the DELETE request to handle it in Cypress
+    cy.intercept('DELETE', `/watchlist/movies/${movieId}`).as('deleteMovie');
+
+    // Perform action that triggers deletion (clicking delete button)
+    cy.get('#deleteMovieIcon').click();
+
+    // Confirm the deletion in the SweetAlert dialog
+    cy.get('.swal2-confirm').click();
+
+    // Optionally, assert that the movie is removed from UI if needed
+    cy.contains('.movieTitle', 'Deleted Movie').should('not.exist');
+  });
+
   it('should log out the user', () => {
     // Navigate to "/" route
     cy.visit('/');
+
     // Perform the logout action
     cy.performLogout();
 
